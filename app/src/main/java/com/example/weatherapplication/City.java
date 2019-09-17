@@ -1,6 +1,8 @@
 package com.example.weatherapplication;
 
-import com.example.whatistheweather.modelWeather.WeatherRequest;
+import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
+import com.example.weatherapplication.modelWeather.WeatherRequest;
+import com.example.weatherapplication.modelWeather.WeatherRequest;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,12 +14,14 @@ public class City implements Serializable {
 
     private String cityName;
     private WeatherRequest weatherRequest;
-    private static ArrayList<City> cityArrayList = new ArrayList();
+    private static ArrayList<City> cityArrayList = new ArrayList<>();
     private static Map<String, WeatherRequest> cityMap = new HashMap<>();
+    private static City currentCity;
 
     public City(String cityName){
         this.cityName = cityName;
         weatherRequest = new WeatherRequest();
+        weatherRequest = ConnectionToGetWeather.getWeatherRequestFromJson(this);
         weatherRequest.setName(cityName);
         cityArrayList.add(this);
     }
@@ -45,5 +49,13 @@ public class City implements Serializable {
 
     public static Map<String, WeatherRequest> getCityMap() {
         return cityMap;
+    }
+
+    public static City getCurrentCity() {
+        return currentCity;
+    }
+
+    public static void setCurrentCity(City currentCity) {
+        City.currentCity = currentCity;
     }
 }

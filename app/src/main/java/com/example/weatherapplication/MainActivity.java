@@ -1,7 +1,9 @@
 package com.example.weatherapplication;
 
+import android.app.Notification;
 import android.os.Bundle;
 
+import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,10 +27,19 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                updateWeather(view);
             }
         });
+    }
+
+    private void updateWeather(View view) {
+        Snackbar.make(view, "Update", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+        for (int i = 0; i < City.getCityArrayList().size(); i++) {
+            City city = City.getCityArrayList().get(i);
+            city.putWeatherRequest(ConnectionToGetWeather.getWeatherRequestFromJson(city));
+        }
     }
 
     @Override

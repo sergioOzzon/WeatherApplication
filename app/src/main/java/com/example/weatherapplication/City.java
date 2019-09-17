@@ -1,7 +1,5 @@
 package com.example.weatherapplication;
 
-import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
-import com.example.weatherapplication.modelWeather.WeatherRequest;
 import com.example.weatherapplication.modelWeather.WeatherRequest;
 
 import java.io.Serializable;
@@ -21,7 +19,6 @@ public class City implements Serializable {
     public City(String cityName){
         this.cityName = cityName;
         weatherRequest = new WeatherRequest();
-        weatherRequest = ConnectionToGetWeather.getWeatherRequestFromJson(this);
         weatherRequest.setName(cityName);
         cityArrayList.add(this);
     }

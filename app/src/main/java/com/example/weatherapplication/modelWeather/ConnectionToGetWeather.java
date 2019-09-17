@@ -1,5 +1,6 @@
 package com.example.weatherapplication.modelWeather;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.weatherapplication.City;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ConnectionToGetWeather {
+public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
 
     private static String WEATHER_URL;
     private static WeatherRequest weatherRequest;
@@ -49,5 +50,16 @@ public class ConnectionToGetWeather {
 
     public static String getCityName(){
         return city.getCityName();
+    }
+
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+        final int SIZE = City.getCityArrayList().size();
+        for (int i = 0; i < SIZE; i++) {
+            City city = City.getCityArrayList().get(i);
+            city.putWeatherRequest(getWeatherRequestFromJson(city));
+        }
+        return null;
     }
 }

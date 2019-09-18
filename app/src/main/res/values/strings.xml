@@ -22,4 +22,11 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="name">NAME</string>
+    <string name="temperature">TEMPERATURE</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="time">TIME</string>
+    <string name="temp">TEMP</string>
+    <string name="weather_icon">weather_icon</string>
+    <string name="temp_on_day">TEMP_ON_DAY</string>
 </resources>

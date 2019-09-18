@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        City city = new City("Surgut");
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         updateWeather();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance(city)).commit();
     }
 
     private void updateWeather() {

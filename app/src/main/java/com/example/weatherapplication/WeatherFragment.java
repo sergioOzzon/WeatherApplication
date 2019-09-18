@@ -40,4 +40,6 @@ public class WeatherFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 
+
+
 }

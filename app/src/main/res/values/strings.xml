@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello World!</string>
     <string name="action_about_as">About as...</string>
     <string name="locations">Locations</string>
     <string name="title_activity_settings">Settings</string>

@@ -3,47 +3,26 @@ package com.example.weatherapplication;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LocationsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LocationsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private City currentCity;
+    private static final String CURRENT_CITY =  "Current city";
 
-
-    public LocationsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LocationsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LocationsFragment newInstance(String param1, String param2) {
+    public static LocationsFragment newInstance(City currentCity) {
         LocationsFragment fragment = new LocationsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(CURRENT_CITY, currentCity);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,10 +31,10 @@ public class LocationsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            currentCity = (City) getArguments().getSerializable(CURRENT_CITY);
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,4 +43,32 @@ public class LocationsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_locations, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        LocationsAdapter adapter = new LocationsAdapter();
+        RecyclerView locationsRecycler = view.findViewById(R.id.LocationsRecyclerView);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.separator));
+        locationsRecycler.addItemDecoration(itemDecoration);
+
+        locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        locationsRecycler.setHasFixedSize(true);
+        locationsRecycler.setAdapter(adapter);
+
+        adapter.setItemClickListener(new LocationsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                currentCity = City.getCityArrayList().get(position);
+                City.setCurrentCity(currentCity);
+                loadFragment(WeatherFragment.newInstance(currentCity));
+            }
+        });
+    }
+
+    private void loadFragment(Fragment fragment){
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
 }

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             loadFragment(new SettingsFragment());
             return true;
         } else if (id == R.id.action_location){
-            //TODO
+            loadFragment(new LocationsFragment());
             return true;
         } else if (id == R.id.action_about_as) {
             loadFragment(new AboutAsFragment());

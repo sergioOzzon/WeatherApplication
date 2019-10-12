@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
+import com.example.weatherapplication.modelWeather.Weather;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,13 +17,16 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    City city;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        City city = new City("Surgut");
+        city = new City("Surgut");
+        new City("Moscow");
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_about_as) {
             loadFragment(new AboutAsFragment());
+            return true;
+        } else if (id == R.id.action_main) {
+            loadFragment(WeatherFragment.newInstance(city));
             return true;
         }
         return super.onOptionsItemSelected(item);

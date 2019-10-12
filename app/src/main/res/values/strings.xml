@@ -30,4 +30,6 @@
     <string name="weather_icon">weather_icon</string>
     <string name="temp_on_day">TEMP_ON_DAY</string>
     <string name="imageofcitiesweatherincitiesrecycler">imageOfCitiesWeatherInCitiesRecycler</string>
+    <string name="action_main">Main</string>
+    <string name="iconWeather">ICON</string>
 </resources>

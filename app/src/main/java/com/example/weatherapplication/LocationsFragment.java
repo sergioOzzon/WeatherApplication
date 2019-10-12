@@ -40,6 +40,7 @@ public class LocationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_locations, container, false);
     }
 
@@ -50,13 +51,15 @@ public class LocationsFragment extends Fragment {
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.LocationsRecyclerView);
 
+        locationsRecycler.setAdapter(adapter);
+
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.separator));
         locationsRecycler.addItemDecoration(itemDecoration);
 
         locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         locationsRecycler.setHasFixedSize(true);
-        locationsRecycler.setAdapter(adapter);
+
 
         adapter.setItemClickListener(new LocationsAdapter.OnItemClickListener() {
             @Override

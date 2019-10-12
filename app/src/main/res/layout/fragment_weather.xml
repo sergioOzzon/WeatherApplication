@@ -36,6 +36,13 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/iconWeather"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/iconWeather" />
+
+                <TextView
                     android:id="@+id/cityDescription"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -45,11 +52,11 @@
                 <TextView
                     android:id="@+id/cityTemp"
                     android:layout_width="match_parent"
-                    android:layout_height="82dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/temperature"
                     android:textColor="@color/colorFont"
-                    android:textSize="50sp" />
+                    android:textSize="60sp" />
 
                 <TextView
                     android:id="@+id/tempOnDay"
@@ -62,8 +69,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:itemCount="3"
+                    android:background="@color/colorAccent"
                     tools:listitem="@layout/item_hour_weather" />
             </LinearLayout>
         </ScrollView>
@@ -74,8 +80,6 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/frameInWeatherFragment"
         app:layout_constraintEnd_toEndOf="@+id/frameInWeatherFragment"
         app:layout_constraintStart_toStartOf="@+id/frameInWeatherFragment"

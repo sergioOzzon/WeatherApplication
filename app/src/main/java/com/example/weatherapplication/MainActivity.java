@@ -2,11 +2,12 @@ package com.example.weatherapplication;
 
 import android.os.Bundle;
 
+import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.view.View;
 import android.view.Menu;
@@ -14,21 +15,37 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    City city;
+    static String currentFragment = "";
+    final static String SETTING_FRAGMENT = "setting";
+    final static String WEATHER_FRAGMENT = "weather";
+    final static String LOCATION_FRAGMENT = "location";
+    final static String ABOUT_AS_FRAGMENT = "about as";
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        setSupportActionBar(toolbar);
+        city = new City("Surgut");
+        new City("Moscow");
+
+        final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                updateWeather();
             }
         });
+        updateWeather();
+        loadFragment(WeatherFragment.newInstance(city));
+    }
+
+    private void updateWeather() {
+        ConnectionToGetWeather connection = new ConnectionToGetWeather();
+        connection.execute();
     }
 
     @Override
@@ -45,11 +62,34 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            if (!currentFragment.equals(SETTING_FRAGMENT))
+                loadFragment(new SettingsFragment());
+            currentFragment = SETTING_FRAGMENT;
+            return true;
+        } else if (id == R.id.action_location){
+            if(!currentFragment.equals(LOCATION_FRAGMENT))
+                loadFragment(new LocationsFragment());
+            currentFragment = LOCATION_FRAGMENT;
+            return true;
+        } else if (id == R.id.action_about_as) {
+            if (!currentFragment.equals(ABOUT_AS_FRAGMENT))
+                loadFragment(new AboutAsFragment());
+            currentFragment = ABOUT_AS_FRAGMENT;
+            return true;
+        } else if (id == R.id.action_main) {
+            if (!currentFragment.equals(WEATHER_FRAGMENT))
+                loadFragment(WeatherFragment.newInstance(city));
+            currentFragment = WEATHER_FRAGMENT;
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+    private void loadFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
+
+
+
 }

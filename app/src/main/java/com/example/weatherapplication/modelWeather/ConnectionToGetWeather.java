@@ -19,13 +19,10 @@ public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
 
     private static String WEATHER_URL;
     private static WeatherRequest weatherRequest;
-    private static City city;
 
     public static WeatherRequest getWeatherRequestFromJson(City city){
 
-        ConnectionToGetWeather.city = city;
-
-        WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?q=" + getCityName() + ",RU&appid=240af58b6f095eb759a3ecd2d282d448";
+        WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city.getCityName() + ",RU&appid=240af58b6f095eb759a3ecd2d282d448";
 
         try {
             String result;
@@ -47,11 +44,6 @@ public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
         }
         return weatherRequest;
     }
-
-    public static String getCityName(){
-        return city.getCityName();
-    }
-
 
     @Override
     protected Void doInBackground(Void... voids) {

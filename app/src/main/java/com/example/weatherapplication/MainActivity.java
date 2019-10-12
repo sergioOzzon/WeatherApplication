@@ -1,10 +1,8 @@
 package com.example.weatherapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
-import com.example.weatherapplication.modelWeather.Weather;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,16 +16,23 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     City city;
+    static String currentFragment = "";
+    final static String SETTING_FRAGMENT = "setting";
+    final static String WEATHER_FRAGMENT = "weather";
+    final static String LOCATION_FRAGMENT = "location";
+    final static String ABOUT_AS_FRAGMENT = "about as";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         city = new City("Surgut");
         new City("Moscow");
-        FloatingActionButton fab = findViewById(R.id.fab);
+
+        final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         updateWeather();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance(city)).commit();
+        loadFragment(WeatherFragment.newInstance(city));
     }
 
     private void updateWeather() {
@@ -58,16 +63,24 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            loadFragment(new SettingsFragment());
+            if (!currentFragment.equals(SETTING_FRAGMENT))
+                loadFragment(new SettingsFragment());
+            currentFragment = SETTING_FRAGMENT;
             return true;
         } else if (id == R.id.action_location){
-            loadFragment(new LocationsFragment());
+            if(!currentFragment.equals(LOCATION_FRAGMENT))
+                loadFragment(new LocationsFragment());
+            currentFragment = LOCATION_FRAGMENT;
             return true;
         } else if (id == R.id.action_about_as) {
-            loadFragment(new AboutAsFragment());
+            if (!currentFragment.equals(ABOUT_AS_FRAGMENT))
+                loadFragment(new AboutAsFragment());
+            currentFragment = ABOUT_AS_FRAGMENT;
             return true;
         } else if (id == R.id.action_main) {
-            loadFragment(WeatherFragment.newInstance(city));
+            if (!currentFragment.equals(WEATHER_FRAGMENT))
+                loadFragment(WeatherFragment.newInstance(city));
+            currentFragment = WEATHER_FRAGMENT;
             return true;
         }
         return super.onOptionsItemSelected(item);

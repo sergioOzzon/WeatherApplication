@@ -20,6 +20,7 @@ public class LocationsFragment extends Fragment {
 
     private City currentCity;
     private static final String CURRENT_CITY =  "Current city";
+    final static String WEATHER_FRAGMENT = "weather";
 
     public static LocationsFragment newInstance(City currentCity) {
         LocationsFragment fragment = new LocationsFragment();
@@ -78,5 +79,6 @@ public class LocationsFragment extends Fragment {
 
     private void loadFragment(Fragment fragment){
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        MainActivity.currentFragment = WEATHER_FRAGMENT;
     }
 }

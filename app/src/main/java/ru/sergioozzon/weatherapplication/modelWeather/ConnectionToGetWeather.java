@@ -1,9 +1,9 @@
-package com.example.weatherapplication.modelWeather;
+package ru.sergioozzon.weatherapplication.modelWeather;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.weatherapplication.City;
+import ru.sergioozzon.weatherapplication.City;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;

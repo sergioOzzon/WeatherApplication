@@ -1,4 +1,4 @@
-package com.example.weatherapplication.modelWeather;
+package ru.sergioozzon.weatherapplication.modelWeather;
 
 public class Coord {
     private float lon;

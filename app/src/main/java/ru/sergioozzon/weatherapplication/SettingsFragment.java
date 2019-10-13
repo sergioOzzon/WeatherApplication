@@ -1,11 +1,10 @@
-package com.example.weatherapplication;
+package ru.sergioozzon.weatherapplication;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.example.weatherapplication.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

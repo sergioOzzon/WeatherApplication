@@ -1,11 +1,10 @@
-package com.example.weatherapplication;
+package ru.sergioozzon.weatherapplication;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ScrollingView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,8 +14,10 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
-import com.example.weatherapplication.modelWeather.WeatherRequest;
+import com.example.weatherapplication.R;
+
+import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
+import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
 
 public class WeatherFragment extends Fragment {
 

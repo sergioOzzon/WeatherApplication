@@ -1,13 +1,16 @@
-package com.example.weatherapplication;
+package ru.sergioozzon.weatherapplication;
 
 import android.os.Bundle;
 
-import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
+import com.example.weatherapplication.R;
+
+import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.View;
 import android.view.Menu;
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
     }
 
 

@@ -29,7 +29,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     @Override
     public void onBindViewHolder(@NonNull LocationsAdapter.ViewHolder holder, int position) {
         holder.getCityName().setText(String.valueOf(City.getCityArrayList().get(position).getCityName()));
-        holder.getCurrentTemp().setText(String.valueOf(City.getCityArrayList().get(position).getWeatherRequest().getMain().getTemp()));
+        holder.getCurrentTemp().setText(String.format("%.0f °C", City.getCityArrayList().get(position).getWeatherRequest().getMain().getTemp()));
         //holder.getImgOfCurrentWeather().setImageResource(City.getCityArrayList().get(position).getWeatherRequest());
     }
 

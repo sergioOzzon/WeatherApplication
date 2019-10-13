@@ -49,20 +49,17 @@ public class LocationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.LocationsRecyclerView);
-
-        locationsRecycler.setAdapter(adapter);
-
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
-        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.separator));
-        locationsRecycler.addItemDecoration(itemDecoration);
-
+        setDecorator(locationsRecycler);
         locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         locationsRecycler.setHasFixedSize(true);
+        locationsRecycler.setAdapter(adapter);
+        setItemClickListener(adapter);
 
+    }
 
+    private void setItemClickListener(LocationsAdapter adapter) {
         adapter.setItemClickListener(new LocationsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -71,6 +68,12 @@ public class LocationsFragment extends Fragment {
                 loadFragment(WeatherFragment.newInstance(currentCity));
             }
         });
+    }
+
+    private void setDecorator(RecyclerView locationsRecycler) {
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.separator));
+        locationsRecycler.addItemDecoration(itemDecoration);
     }
 
     private void loadFragment(Fragment fragment){

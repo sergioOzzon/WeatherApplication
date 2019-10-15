@@ -7,6 +7,11 @@
     android:layout_height="70dp"
     android:orientation="horizontal">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5" />
+
     <TextView
         android:id="@+id/cityNameInCitiesRecycler"
         android:layout_width="match_parent"

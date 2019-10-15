@@ -4,16 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LayoutOfCityInCitiesRecycler"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/imgWeatherInCitiesRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:contentDescription="@string/imageofcitiesweatherincitiesrecycler"
-        tools:src="@drawable/icon_cloudy" />
 
     <TextView
         android:id="@+id/cityNameInCitiesRecycler"
@@ -35,4 +27,5 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="currentTemp" />
+
 </LinearLayout>

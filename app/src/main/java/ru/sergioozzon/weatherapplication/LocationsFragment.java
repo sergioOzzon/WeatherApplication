@@ -1,6 +1,7 @@
 package ru.sergioozzon.weatherapplication;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.weatherapplication.R;
+
+import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
+import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
 
 public class LocationsFragment extends Fragment {
 
@@ -38,18 +42,20 @@ public class LocationsFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_locations, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RecyclerViewCreation(view);
+
+    }
+
+    private void RecyclerViewCreation(@NonNull View view) {
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.LocationsRecyclerView);
         setDecorator(locationsRecycler);
@@ -57,7 +63,6 @@ public class LocationsFragment extends Fragment {
         locationsRecycler.setHasFixedSize(true);
         locationsRecycler.setAdapter(adapter);
         setItemClickListener(adapter);
-
     }
 
     private void setItemClickListener(LocationsAdapter adapter) {
@@ -78,7 +83,10 @@ public class LocationsFragment extends Fragment {
     }
 
     private void loadFragment(Fragment fragment){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
         MainActivity.currentFragment = WEATHER_FRAGMENT;
     }
 }

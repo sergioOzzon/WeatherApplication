@@ -25,12 +25,12 @@ public class WeatherFragment extends Fragment {
 
     private City city;
 
-    FrameLayout frameLayout;
-    ProgressBar progressBar;
-    TextView cityNameTextView;
-    TextView cityTempTextView;
-    TextView descriptionTextView;
-    TextView TempOnDayTextView;
+    private FrameLayout frameLayout;
+    private ProgressBar progressBar;
+    private TextView cityNameTextView;
+    private TextView cityTempTextView;
+    private TextView descriptionTextView;
+    private TextView TempOnDayTextView;
 
     public WeatherFragment() {
     }
@@ -45,6 +45,7 @@ public class WeatherFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             city = (City) getArguments().getSerializable(ARG_CURRENT_CITY);
@@ -55,23 +56,25 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        frameLayout = view.findViewById(R.id.frameInWeatherFragment);
-        progressBar = view.findViewById(R.id.progressBar2);
-        cityNameTextView = view.findViewById(R.id.cityName);
-        cityTempTextView = view.findViewById(R.id.cityTemp);
-        descriptionTextView = view.findViewById(R.id.cityDescription);
-        TempOnDayTextView = view.findViewById(R.id.tempOnDay);
-
+        initializeViews(view);
         UpdateTask updateTask = new UpdateTask();
         updateTask.execute(city);
-
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void initializeViews(@NonNull View view) {
+        frameLayout = (FrameLayout) view.findViewById(R.id.frameInWeatherFragment);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
+        cityNameTextView = (TextView) view.findViewById(R.id.cityName);
+        cityTempTextView = (TextView) view.findViewById(R.id.cityTemp);
+        descriptionTextView = (TextView)view.findViewById(R.id.cityDescription);
+        TempOnDayTextView = (TextView) view.findViewById(R.id.tempOnDay);
     }
 
     class UpdateTask extends AsyncTask<City, Void, WeatherRequest>{
@@ -100,7 +103,4 @@ public class WeatherFragment extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
-
-
-
 }

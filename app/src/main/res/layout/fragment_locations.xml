@@ -10,5 +10,8 @@
         android:id="@+id/LocationsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_locations" />
+        tools:listitem="@layout/item_locations">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>

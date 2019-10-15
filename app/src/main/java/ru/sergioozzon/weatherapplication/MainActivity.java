@@ -24,26 +24,35 @@ public class MainActivity extends AppCompatActivity {
     final static String WEATHER_FRAGMENT = "weather";
     final static String LOCATION_FRAGMENT = "location";
     final static String ABOUT_AS_FRAGMENT = "about as";
+    Toolbar toolbar;
+    View.OnClickListener clickListenerOnFab = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            updateWeather();
+        }
+    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
+        initToolbar();
+        initFloatingActionButton();
+        //TODO: удалить инициализацию городов из кода
         city = new City("Surgut");
         new City("Moscow");
-
-        final FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateWeather();
-            }
-        });
         updateWeather();
         loadFragment(WeatherFragment.newInstance(city));
+    }
+
+    private void initFloatingActionButton() {
+        final FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(clickListenerOnFab);
+    }
+
+    private void initToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void updateWeather() {
@@ -53,16 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
@@ -90,7 +96,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
     }
 
 

@@ -51,11 +51,11 @@ public class LocationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerViewCreation(view);
+        recyclerViewCreation(view);
 
     }
 
-    private void RecyclerViewCreation(@NonNull View view) {
+    private void recyclerViewCreation(@NonNull View view) {
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.LocationsRecyclerView);
         setDecorator(locationsRecycler);

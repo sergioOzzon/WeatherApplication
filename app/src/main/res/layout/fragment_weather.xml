@@ -36,6 +36,13 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/currentDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/currentDate" />
+
+                <TextView
                     android:id="@+id/iconWeather"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -67,9 +74,12 @@
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/weatherRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorAccent"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_hour_weather" />
             </LinearLayout>
         </ScrollView>

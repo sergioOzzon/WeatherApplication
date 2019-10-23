@@ -17,6 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
 
     private static String WEATHER_URL;
+    private static String WEATHER_URL1;
     private static WeatherRequest weatherRequest;
 
     public static WeatherRequest getWeatherRequestFromJson(City city){

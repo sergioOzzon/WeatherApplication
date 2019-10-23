@@ -1,5 +1,12 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 public class WeatherRequest {
     private Coord coord;
     private Weather[] weather;
@@ -7,6 +14,7 @@ public class WeatherRequest {
     private Wind wind;
     private Clouds clouds;
     private String name;
+    private int dt;
 
 
     public Coord getCoord() {
@@ -55,5 +63,18 @@ public class WeatherRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDt() {
+        //TODO:
+        Calendar calendar = GregorianCalendar.getInstance();
+        //calendar.set(Calendar.MILLISECOND, dt);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy");
+        String dt = dateFormat.format(calendar.getTime());
+        return dt;
+    }
+
+    public void setDt(int dt) {
+        this.dt = dt;
     }
 }

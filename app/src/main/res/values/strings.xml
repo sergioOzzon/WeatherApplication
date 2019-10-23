@@ -40,4 +40,5 @@
     <string name="about_as_content">The author of this application Sergey Smirnov. The application is developed as part of training on GeekBrains.</string>
     <string name="send_feedback">Send feedback</string>
     <string name="share">Share</string>
+    <string name="currentDate">DATE</string>
 </resources>

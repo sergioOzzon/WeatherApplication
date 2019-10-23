@@ -11,6 +11,8 @@ import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
 import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
+import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;

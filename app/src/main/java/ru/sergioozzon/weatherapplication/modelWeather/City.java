@@ -1,6 +1,4 @@
-package ru.sergioozzon.weatherapplication;
-
-import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
+package ru.sergioozzon.weatherapplication.modelWeather;
 
 import java.io.Serializable;
 import java.util.ArrayList;

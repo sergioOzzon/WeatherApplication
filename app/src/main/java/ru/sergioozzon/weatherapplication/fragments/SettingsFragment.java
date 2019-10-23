@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication;
+package ru.sergioozzon.weatherapplication.fragments;
 
 import android.os.Bundle;
 

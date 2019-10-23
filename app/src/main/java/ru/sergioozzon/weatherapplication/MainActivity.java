@@ -4,6 +4,11 @@ import android.os.Bundle;
 
 import com.example.weatherapplication.R;
 
+import ru.sergioozzon.weatherapplication.fragments.AboutAsFragment;
+import ru.sergioozzon.weatherapplication.fragments.LocationsFragment;
+import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
+import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
+import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -19,7 +24,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     City city;
-    static String currentFragment = "";
+    public static String currentFragment = "";
     final static String SETTING_FRAGMENT = "setting";
     final static String WEATHER_FRAGMENT = "weather";
     final static String LOCATION_FRAGMENT = "location";

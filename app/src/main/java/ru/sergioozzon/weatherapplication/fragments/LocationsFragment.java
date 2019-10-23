@@ -1,7 +1,6 @@
-package ru.sergioozzon.weatherapplication;
+package ru.sergioozzon.weatherapplication.fragments;
 
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,8 +16,9 @@ import android.view.ViewGroup;
 
 import com.example.weatherapplication.R;
 
-import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
-import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
+import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.RecyclerViewAdapters.LocationsAdapter;
+import ru.sergioozzon.weatherapplication.MainActivity;
 
 public class LocationsFragment extends Fragment {
 

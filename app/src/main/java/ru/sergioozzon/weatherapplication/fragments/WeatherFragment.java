@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 import com.example.weatherapplication.R;
 
-import java.util.Locale;
-
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
 import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;

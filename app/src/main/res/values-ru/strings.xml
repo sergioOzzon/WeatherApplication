@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WeatherApplication</string>
-    <string name="home">Home</string>
-    <string name="about_us">About us</string>
-    <string name="setting">Setting</string>
-    <string name="location">Location</string>
+    <string name="app_name">Погода</string>
+    <string name="home">Текущая погода</string>
+    <string name="about_us">О разаботчике</string>
+    <string name="setting">Настройки</string>
+    <string name="location">Места</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -32,12 +33,12 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Weather</string>
+    <string name="nav_header_title">Погода</string>
     <string name="nav_header_subtitle">ser2603@yandex.ru</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="communicate">Communicate</string>
-    <string name="about_as_content">The author of this application Sergey Smirnov. The application is developed as part of training on GeekBrains.</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="share">Share</string>
+    <string name="communicate">Обратная связь</string>
+    <string name="send_feedback">Написать отзыв</string>
+    <string name="share">Поделиться</string>
+    <string name="about_as_content">Автор данного приложения Сергей Смирнов. Приложение разработано в рамках обучения на GeekBrains.</string>
 </resources>

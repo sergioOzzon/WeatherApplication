@@ -6,7 +6,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.weatherapplication.R;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+public class SettingsFragment extends PreferenceFragmentCompat{
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

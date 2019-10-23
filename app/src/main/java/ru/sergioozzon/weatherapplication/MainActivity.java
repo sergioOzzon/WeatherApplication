@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         updateWeather();
         loadFragment(WeatherFragment.newInstance(city));
+        currentFragment = WEATHER_FRAGMENT;
     }
 
     private void initViews() {
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .replace(R.id.fragment_container, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
-        currentFragment = fragment.getTag();
     }
 
     @Override

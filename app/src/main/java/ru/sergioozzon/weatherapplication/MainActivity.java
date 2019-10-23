@@ -1,13 +1,21 @@
-package com.example.weatherapplication;
+package ru.sergioozzon.weatherapplication;
 
 import android.os.Bundle;
 
-import com.example.weatherapplication.modelWeather.ConnectionToGetWeather;
+import com.example.weatherapplication.R;
+
+import ru.sergioozzon.weatherapplication.fragments.AboutAsFragment;
+import ru.sergioozzon.weatherapplication.fragments.LocationsFragment;
+import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
+import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
+import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.View;
 import android.view.Menu;
@@ -16,31 +24,40 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     City city;
-    static String currentFragment = "";
+    public static String currentFragment = "";
     final static String SETTING_FRAGMENT = "setting";
     final static String WEATHER_FRAGMENT = "weather";
     final static String LOCATION_FRAGMENT = "location";
     final static String ABOUT_AS_FRAGMENT = "about as";
+    Toolbar toolbar;
+    View.OnClickListener clickListenerOnFab = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            updateWeather();
+        }
+    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
+        initToolbar();
+        initFloatingActionButton();
+        //TODO: удалить инициализацию городов из кода
         city = new City("Surgut");
         new City("Moscow");
-
-        final FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateWeather();
-            }
-        });
         updateWeather();
         loadFragment(WeatherFragment.newInstance(city));
+    }
+
+    private void initFloatingActionButton() {
+        final FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(clickListenerOnFab);
+    }
+
+    private void initToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void updateWeather() {
@@ -50,16 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
@@ -87,7 +101,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
     }
 
 

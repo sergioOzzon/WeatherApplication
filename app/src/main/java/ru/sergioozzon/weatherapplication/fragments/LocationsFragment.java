@@ -1,4 +1,4 @@
-package com.example.weatherapplication;
+package ru.sergioozzon.weatherapplication.fragments;
 
 
 import android.os.Bundle;
@@ -14,10 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.weatherapplication.R;
+
+import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.RecyclerViewAdapters.LocationsAdapter;
+import ru.sergioozzon.weatherapplication.MainActivity;
+
 public class LocationsFragment extends Fragment {
 
     private City currentCity;
     private static final String CURRENT_CITY =  "Current city";
+    final static String WEATHER_FRAGMENT = "weather";
 
     public static LocationsFragment newInstance(City currentCity) {
         LocationsFragment fragment = new LocationsFragment();
@@ -35,32 +42,30 @@ public class LocationsFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_locations, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RecyclerViewCreation(view);
 
+    }
+
+    private void RecyclerViewCreation(@NonNull View view) {
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.LocationsRecyclerView);
-
-        locationsRecycler.setAdapter(adapter);
-
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
-        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.separator));
-        locationsRecycler.addItemDecoration(itemDecoration);
-
+        setDecorator(locationsRecycler);
         locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         locationsRecycler.setHasFixedSize(true);
+        locationsRecycler.setAdapter(adapter);
+        setItemClickListener(adapter);
+    }
 
-
+    private void setItemClickListener(LocationsAdapter adapter) {
         adapter.setItemClickListener(new LocationsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -71,7 +76,17 @@ public class LocationsFragment extends Fragment {
         });
     }
 
+    private void setDecorator(RecyclerView locationsRecycler) {
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.separator));
+        locationsRecycler.addItemDecoration(itemDecoration);
+    }
+
     private void loadFragment(Fragment fragment){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+        MainActivity.currentFragment = WEATHER_FRAGMENT;
     }
 }

@@ -1,6 +1,4 @@
-package com.example.weatherapplication;
-
-import com.example.weatherapplication.modelWeather.WeatherRequest;
+package ru.sergioozzon.weatherapplication.modelWeather;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ public class City implements Serializable {
         weatherRequest = new WeatherRequest();
         weatherRequest.setName(cityName);
         cityArrayList.add(this);
+        currentCity = this;
     }
 
     public City(String cityName, WeatherRequest weatherRequest){

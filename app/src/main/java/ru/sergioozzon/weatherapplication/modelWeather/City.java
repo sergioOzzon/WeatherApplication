@@ -11,7 +11,6 @@ public class City implements Serializable {
     private String cityName;
     private WeatherRequest weatherRequest;
     private static ArrayList<City> cityArrayList = new ArrayList<>();
-    private static Map<String, WeatherRequest> cityMap = new HashMap<>();
     private static City currentCity;
 
     public City(String cityName){
@@ -22,12 +21,6 @@ public class City implements Serializable {
         currentCity = this;
     }
 
-    public City(String cityName, WeatherRequest weatherRequest){
-        this.cityName = cityName;
-        this.weatherRequest = weatherRequest;
-        cityArrayList.add(this);
-        cityMap.put(cityName, weatherRequest);
-    }
 
     public String getCityName() {
         return cityName;
@@ -41,10 +34,6 @@ public class City implements Serializable {
 
     public static ArrayList<City> getCityArrayList() {
         return cityArrayList;
-    }
-
-    public static Map<String, WeatherRequest> getCityMap() {
-        return cityMap;
     }
 
     public static City getCurrentCity() {

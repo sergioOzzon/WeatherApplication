@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherapplication.R;
@@ -54,15 +55,15 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         private TextView currentTemp;
         private TextView cityName;
         private ImageView imgOfCurrentWeather;
-        private LinearLayout linearLayout;
+        private CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            linearLayout = itemView.findViewById(R.id.LayoutOfCityInCitiesRecycler);
+            cardView = itemView.findViewById(R.id.LayoutOfCityInCitiesRecycler);
             currentTemp = itemView.findViewById(R.id.currentTempInCitiesRecycler);
             cityName = itemView.findViewById(R.id.cityNameInCitiesRecycler);
 
-            linearLayout.setOnClickListener(new View.OnClickListener() {
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (itemClickListener != null)

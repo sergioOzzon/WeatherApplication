@@ -1,36 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LayoutOfCityInCitiesRecycler"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
 
-    <Space
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5" />
+        android:layout_weight="5"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/cityNameInCitiesRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        tools:text="current_city" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
 
-    <TextView
-        android:id="@+id/currentTempInCitiesRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:gravity="center"
-        android:textColor="@color/colorFont"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="currentTemp" />
+        <TextView
+            android:id="@+id/cityNameInCitiesRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center|start"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            tools:text="current_city" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/currentTempInCitiesRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/colorFont"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="currentTemp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

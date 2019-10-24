@@ -57,7 +57,7 @@ public class LocationsFragment extends Fragment {
 
     private void recyclerViewCreation(@NonNull View view) {
         LocationsAdapter adapter = new LocationsAdapter();
-        RecyclerView locationsRecycler = view.findViewById(R.id.LocationsRecyclerView);
+        RecyclerView locationsRecycler = view.findViewById(R.id.locationsRecyclerView);
         setDecorator(locationsRecycler);
         locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         locationsRecycler.setHasFixedSize(true);
@@ -78,7 +78,7 @@ public class LocationsFragment extends Fragment {
 
     private void setDecorator(RecyclerView locationsRecycler) {
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
-        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.separator));
+        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.locations_separator));
         locationsRecycler.addItemDecoration(itemDecoration);
     }
 

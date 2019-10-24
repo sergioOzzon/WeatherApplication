@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,6 @@ import android.widget.TextView;
 
 import com.example.weatherapplication.R;
 
-import ru.sergioozzon.weatherapplication.RecyclerViewAdapters.LocationsAdapter;
 import ru.sergioozzon.weatherapplication.RecyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
@@ -78,6 +78,7 @@ public class WeatherFragment extends Fragment {
         WeatherAdapter adapter = new WeatherAdapter();
         RecyclerView weatherRecycler = view.findViewById(R.id.weatherRecyclerView);
         weatherRecycler.setHasFixedSize(true);
+        setDecorator(weatherRecycler);
         weatherRecycler.setAdapter(adapter);
     }
 
@@ -89,6 +90,12 @@ public class WeatherFragment extends Fragment {
         descriptionTextView = view.findViewById(R.id.cityDescription);
         tempOnDayTextView = view.findViewById(R.id.tempOnDay);
         currentDateTextView = view.findViewById(R.id.currentDate);
+    }
+
+    private void setDecorator(RecyclerView weatherRecycler) {
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL);
+        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.weather_separator));
+        weatherRecycler.addItemDecoration(itemDecoration);
     }
 
     class UpdateTask extends AsyncTask<City, Void, WeatherRequest>{

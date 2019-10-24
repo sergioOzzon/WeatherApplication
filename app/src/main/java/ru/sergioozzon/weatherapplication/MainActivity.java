@@ -1,5 +1,8 @@
 package ru.sergioozzon.weatherapplication;
 
+import android.database.sqlite.SQLiteBlobTooBigException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteMisuseException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -65,6 +68,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (City.getCityArrayList().size() == 0) {
             city = new City("Surgut");
             new City("Moscow");
+            new City("Samara");
+            new City("Surgut");
+            new City("Moscow");
+            new City("Samara");
+            new City("Surgut");
+            new City("Moscow");
+            new City("Samara");
+            new City("Surgut");
+            new City("Moscow");
+            new City("Samara");
+            new City("Surgut");
+            new City("Moscow");
+            new City("Samara");
+            new City("Surgut");
+
+
         } else {
             city = City.getCurrentCity();
         }

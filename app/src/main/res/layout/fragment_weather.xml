@@ -25,15 +25,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
                 <TextView
                     android:id="@+id/cityName"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/name"
                     android:textAlignment="center"
                     android:textColor="@color/colorFont"
-                    android:textSize="24sp" />
+                    android:textSize="30sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
 
                 <TextView
                     android:id="@+id/currentDate"
@@ -42,6 +50,10 @@
                     android:gravity="center"
                     android:text="@string/currentDate" />
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
+
                 <TextView
                     android:id="@+id/iconWeather"
                     android:layout_width="match_parent"
@@ -49,12 +61,20 @@
                     android:gravity="center"
                     android:text="@string/iconWeather" />
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
+
                 <TextView
                     android:id="@+id/cityDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/description" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
 
                 <TextView
                     android:id="@+id/cityTemp"
@@ -65,6 +85,10 @@
                     android:textColor="@color/colorFont"
                     android:textSize="60sp" />
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
+
                 <TextView
                     android:id="@+id/tempOnDay"
                     android:layout_width="match_parent"
@@ -73,11 +97,14 @@
                     android:text="@string/temp_on_day"
                     android:textSize="18sp" />
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/weatherRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_hour_weather" />

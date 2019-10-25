@@ -1,6 +1,8 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
-public class Main {
+import java.io.Serializable;
+
+public class Main implements Serializable {
     private float temp;
     private float pressure;
     private int humidity;

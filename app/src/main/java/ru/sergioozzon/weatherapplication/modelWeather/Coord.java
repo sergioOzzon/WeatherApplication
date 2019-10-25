@@ -1,6 +1,8 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
-public class Coord {
+import java.io.Serializable;
+
+public class Coord implements Serializable {
     private float lon;
     private float lat;
 

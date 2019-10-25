@@ -1,6 +1,8 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
-public class Weather {
+import java.io.Serializable;
+
+public class Weather implements Serializable {
     private String main;
     private String description;
 

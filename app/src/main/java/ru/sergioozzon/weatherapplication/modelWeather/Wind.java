@@ -1,6 +1,8 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
-public class Wind {
+import java.io.Serializable;
+
+public class Wind implements Serializable {
     private float speed;
     private float deg;
 

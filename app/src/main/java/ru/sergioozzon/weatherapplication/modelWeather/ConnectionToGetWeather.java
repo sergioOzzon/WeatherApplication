@@ -16,13 +16,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
 
-    private static String WEATHER_URL;
-    private static String WEATHER_URL1;
     private static WeatherRequest weatherRequest;
 
-    public static WeatherRequest getWeatherRequestFromJson(City city){
+    private static WeatherRequest getWeatherRequestFromJson(City city){
 
-        WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city.getCityName() + ",RU&appid=240af58b6f095eb759a3ecd2d282d448";
+        String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city.getCityName() + ",RU&appid=240af58b6f095eb759a3ecd2d282d448";
 
         try {
             String result;

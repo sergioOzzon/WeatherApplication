@@ -1,25 +1,17 @@
 package ru.sergioozzon.weatherapplication;
 
-import android.database.sqlite.SQLiteBlobTooBigException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteMisuseException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import com.example.weatherapplication.R;
-
 import ru.sergioozzon.weatherapplication.fragments.AboutAsFragment;
 import ru.sergioozzon.weatherapplication.fragments.LocationsFragment;
 import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
 import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
-import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,12 +20,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -67,13 +56,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //TODO: удалить инициализацию городов из кода
         if (City.getCityArrayList().size() == 0) {
             city = new City("Surgut");
+            City.setCurrentCity(city);
             new City("Moscow");
             new City("Samara");
         } else {
             city = City.getCurrentCity();
         }
-        updateWeather();
         loadFragment(WeatherFragment.newInstance(city));
+        updateWeather();
         currentFragment = WEATHER_FRAGMENT;
     }
 

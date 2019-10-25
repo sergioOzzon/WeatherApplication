@@ -18,7 +18,7 @@ public class City implements Serializable {
         weatherRequest = new WeatherRequest();
         weatherRequest.setName(cityName);
         cityArrayList.add(this);
-        currentCity = this;
+        //currentCity = this;
     }
 
 

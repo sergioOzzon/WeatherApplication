@@ -25,7 +25,7 @@ import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
 
 public class WeatherFragment extends Fragment {
 
-    private static final String ARG_CURRENT_CITY = "currentCity";
+    private static final String CURRENT_CITY = "currentCity";
 
     private City city;
 
@@ -43,7 +43,7 @@ public class WeatherFragment extends Fragment {
     public static WeatherFragment newInstance(City city) {
         WeatherFragment fragment = new WeatherFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CURRENT_CITY, city);
+        args.putSerializable(CURRENT_CITY, city);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,7 +54,7 @@ public class WeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (getArguments() != null) {
-            city = (City) getArguments().getSerializable(ARG_CURRENT_CITY);
+            city = (City) getArguments().getSerializable(CURRENT_CITY);
         }
 
     }

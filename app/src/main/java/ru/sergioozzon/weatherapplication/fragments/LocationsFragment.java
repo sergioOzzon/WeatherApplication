@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class LocationsFragment extends Fragment {
 
     private City currentCity;
     private static final String CURRENT_CITY =  "Current city";
-    final static String WEATHER_FRAGMENT = "weather";
+    private final static String WEATHER_FRAGMENT = "weather";
 
     public static LocationsFragment newInstance(City currentCity) {
         LocationsFragment fragment = new LocationsFragment();

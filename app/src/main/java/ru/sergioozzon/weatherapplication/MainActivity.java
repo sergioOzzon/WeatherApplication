@@ -69,21 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             city = new City("Surgut");
             new City("Moscow");
             new City("Samara");
-            new City("Surgut");
-            new City("Moscow");
-            new City("Samara");
-            new City("Surgut");
-            new City("Moscow");
-            new City("Samara");
-            new City("Surgut");
-            new City("Moscow");
-            new City("Samara");
-            new City("Surgut");
-            new City("Moscow");
-            new City("Samara");
-            new City("Surgut");
-
-
         } else {
             city = City.getCurrentCity();
         }
@@ -124,11 +109,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void loadFragment(Fragment fragment){
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.addToBackStack("");
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
     }
 
     @Override

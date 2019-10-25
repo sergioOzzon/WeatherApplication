@@ -52,6 +52,7 @@ public class WeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if (getArguments() != null) {
             city = (City) getArguments().getSerializable(ARG_CURRENT_CITY);
         }

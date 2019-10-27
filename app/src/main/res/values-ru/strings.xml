@@ -31,7 +31,9 @@
     <string name="action_main">Main</string>
     <string name="iconWeather">ICON</string>
     <string name="currentDate">DATE</string>
+    <string name="update_time">UPDATE_TIME</string>
 
+    <string name="updated">обновлено: </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Погода</string>

@@ -41,4 +41,6 @@
     <string name="send_feedback">Send feedback</string>
     <string name="share">Share</string>
     <string name="currentDate">DATE</string>
+    <string name="update_time">UPDATE_TIME</string>
+    <string name="updated">updated: </string>
 </resources>

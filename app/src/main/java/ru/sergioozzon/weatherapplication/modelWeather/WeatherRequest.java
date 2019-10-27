@@ -1,12 +1,9 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class WeatherRequest implements Serializable {
     private Coord coord;
@@ -15,7 +12,7 @@ public class WeatherRequest implements Serializable {
     private Wind wind;
     private Clouds clouds;
     private String name;
-    private int dt;
+    private Calendar calendar;
 
 
     public Coord getCoord() {
@@ -66,16 +63,11 @@ public class WeatherRequest implements Serializable {
         this.name = name;
     }
 
-    public String getDt() {
-        //TODO:
-        Calendar calendar = GregorianCalendar.getInstance();
-        //calendar.set(Calendar.MILLISECOND, dt);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy");
-        String dt = dateFormat.format(calendar.getTime());
-        return dt;
+    public Calendar getUpdateDate() {
+        return calendar;
     }
 
-    public void setDt(int dt) {
-        this.dt = dt;
+    public void setUpdateDate(Calendar calendar) {
+        this.calendar = calendar;
     }
 }

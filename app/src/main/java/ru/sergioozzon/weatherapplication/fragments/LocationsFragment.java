@@ -82,15 +82,15 @@ public class LocationsFragment extends Fragment {
 
     private void setDecorator(RecyclerView locationsRecycler) {
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
-        itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.locations_separator));
+        itemDecoration.setDrawable(getActivity().getResources().getDrawable(R.drawable.locations_separator));
         locationsRecycler.addItemDecoration(itemDecoration);
     }
 
     private void loadFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.addToBackStack("");
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
         MainActivity.currentFragment = WEATHER_FRAGMENT;
     }

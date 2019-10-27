@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.GregorianCalendar;
 import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -34,6 +35,7 @@ public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
             Log.d("RESULT OF CONNECTION", result);
             Gson gson = new Gson();
             weatherRequest = gson.fromJson(result, WeatherRequest.class);
+            weatherRequest.setUpdateDate(new GregorianCalendar());
 
         } catch (ProtocolException e) {
             e.printStackTrace();

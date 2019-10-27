@@ -27,11 +27,14 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     City city;
+
     public static String currentFragment = "";
     final static String SETTING_FRAGMENT = "setting";
     final static String WEATHER_FRAGMENT = "weather";
     final static String LOCATION_FRAGMENT = "location";
     final static String ABOUT_AS_FRAGMENT = "about as";
+    private static final String CURRENT_CITY = "current city";
+
     private Toolbar toolbar;
     private DrawerLayout drawer;
     FloatingActionButton fab;
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             city = City.getCurrentCity();
         }
         loadFragment(WeatherFragment.newInstance(city));
-        updateWeather();
+        if (savedInstanceState == null) updateWeather();
         currentFragment = WEATHER_FRAGMENT;
     }
 
@@ -71,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
         drawer = findViewById(R.id.drawer_layout);
-        homeDrawable = getDrawable(R.drawable.home);
-        updateDrawable = getDrawable(R.drawable.reload);
+        homeDrawable = getResources().getDrawable(R.drawable.home);
+        updateDrawable = getResources().getDrawable(R.drawable.reload);
         navigationView = findViewById(R.id.nav_view);
     }
 
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void updateWeather() {
         ConnectionToGetWeather connection = new ConnectionToGetWeather();
         connection.execute();
+        loadFragment(WeatherFragment.newInstance(city));
     }
 
     private void loadFragment(Fragment fragment){
@@ -107,9 +111,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        city = (City) savedInstanceState.getSerializable(CURRENT_CITY);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Bundle args = new Bundle();
+        args.putSerializable(CURRENT_CITY, city);
+        onSaveInstanceState(args);
     }
 
     @Override

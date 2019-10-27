@@ -3,16 +3,11 @@ package ru.sergioozzon.weatherapplication.RecyclerViewAdapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.weatherapplication.R;
-
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.ViewHolder> {
@@ -25,8 +20,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     @Override
     public LocationsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_locations, parent, false);
-        LocationsAdapter.ViewHolder viewHolder = new LocationsAdapter.ViewHolder(v);
-        return viewHolder;
+        return new LocationsAdapter.ViewHolder(v);
     }
 
     @Override
@@ -51,15 +45,13 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         this.itemClickListener = itemClickListener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         private TextView currentTemp;
         private TextView cityName;
-        private ImageView imgOfCurrentWeather;
-        private CardView cardView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.LayoutOfCityInCitiesRecycler);
+            CardView cardView = itemView.findViewById(R.id.LayoutOfCityInCitiesRecycler);
             currentTemp = itemView.findViewById(R.id.currentTempInCitiesRecycler);
             cityName = itemView.findViewById(R.id.cityNameInCitiesRecycler);
 
@@ -72,16 +64,12 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
             });
         }
 
-        public TextView getCurrentTemp() {
+        TextView getCurrentTemp() {
             return currentTemp;
         }
 
-        public TextView getCityName() {
+        TextView getCityName() {
             return cityName;
-        }
-
-        public ImageView getImgOfCurrentWeather() {
-            return imgOfCurrentWeather;
         }
     }
 }

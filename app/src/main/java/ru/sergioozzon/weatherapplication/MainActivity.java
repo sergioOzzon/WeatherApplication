@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     City city;
 
-    public static String currentFragment = "";
+
     final static String SETTING_FRAGMENT = "setting";
     final static String WEATHER_FRAGMENT = "weather";
     final static String LOCATION_FRAGMENT = "location";
     final static String ABOUT_AS_FRAGMENT = "about as";
     private static final String CURRENT_CITY = "current city";
+    public static String currentFragment = WEATHER_FRAGMENT;
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -65,17 +66,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             city = City.getCurrentCity();
         }
-        loadFragment(WeatherFragment.newInstance(city));
+        if (currentFragment.equals(WEATHER_FRAGMENT)) {
+            loadFragment(WeatherFragment.newInstance(city));
+        }
         if (savedInstanceState == null) updateWeather();
-        currentFragment = WEATHER_FRAGMENT;
+
     }
 
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
         drawer = findViewById(R.id.drawer_layout);
-        homeDrawable = getResources().getDrawable(R.drawable.home);
-        updateDrawable = getResources().getDrawable(R.drawable.reload);
+        homeDrawable = getDrawable(R.drawable.home);
+        updateDrawable = getDrawable(R.drawable.reload);
         navigationView = findViewById(R.id.nav_view);
     }
 
@@ -99,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void updateWeather() {
         ConnectionToGetWeather connection = new ConnectionToGetWeather();
         connection.execute();
-        loadFragment(WeatherFragment.newInstance(city));
     }
 
     private void loadFragment(Fragment fragment){

@@ -2,7 +2,6 @@ package ru.sergioozzon.weatherapplication.fragments;
 
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,16 +9,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.weatherapplication.R;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.bottomappbar.BottomAppBar;
-
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.RecyclerViewAdapters.LocationsAdapter;
 import ru.sergioozzon.weatherapplication.MainActivity;
@@ -27,24 +20,7 @@ import ru.sergioozzon.weatherapplication.MainActivity;
 public class LocationsFragment extends Fragment {
 
     private City currentCity;
-    private static final String CURRENT_CITY =  "Current city";
     private final static String WEATHER_FRAGMENT = "weather";
-
-    public static LocationsFragment newInstance(City currentCity) {
-        LocationsFragment fragment = new LocationsFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(CURRENT_CITY, currentCity);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            currentCity = (City) getArguments().getSerializable(CURRENT_CITY);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

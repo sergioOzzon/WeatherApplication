@@ -2,9 +2,6 @@ package ru.sergioozzon.weatherapplication.modelWeather;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class City implements Serializable {
 
@@ -27,7 +24,7 @@ public class City implements Serializable {
 
     public WeatherRequest getWeatherRequest() { return weatherRequest; }
 
-    public void putWeatherRequest(WeatherRequest weatherRequest) {
+    void putWeatherRequest(WeatherRequest weatherRequest) {
         this.weatherRequest = weatherRequest;
     }
 

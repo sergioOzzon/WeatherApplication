@@ -48,13 +48,11 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView currentTemp;
         private TextView cityName;
-
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             CardView cardView = itemView.findViewById(R.id.LayoutOfCityInCitiesRecycler);
             currentTemp = itemView.findViewById(R.id.currentTempInCitiesRecycler);
             cityName = itemView.findViewById(R.id.cityNameInCitiesRecycler);
-
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -63,11 +61,9 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
                 }
             });
         }
-
         TextView getCurrentTemp() {
             return currentTemp;
         }
-
         TextView getCityName() {
             return cityName;
         }

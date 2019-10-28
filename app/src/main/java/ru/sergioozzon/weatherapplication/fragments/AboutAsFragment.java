@@ -1,13 +1,10 @@
 package ru.sergioozzon.weatherapplication.fragments;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.weatherapplication.R;
 
 public class AboutAsFragment extends Fragment{
@@ -17,7 +14,4 @@ public class AboutAsFragment extends Fragment{
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_about_as, container, false);
     }
-
-
-
 }

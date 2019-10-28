@@ -29,10 +29,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-
         ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
-
 }

@@ -29,9 +29,7 @@ import static android.content.Context.SENSOR_SERVICE;
 public class WeatherFragment extends Fragment {
 
     private static final String CURRENT_CITY = "currentCity";
-
     private City city;
-
     private FrameLayout frameLayout;
     private ProgressBar progressBar;
     private TextView cityNameTextView;
@@ -46,7 +44,7 @@ public class WeatherFragment extends Fragment {
     private Sensor sensorTemp;
     private Sensor sensorHumid;
 
-    public WeatherFragment() {
+    private WeatherFragment() {
     }
 
     public static WeatherFragment newInstance(City city) {
@@ -101,10 +99,8 @@ public class WeatherFragment extends Fragment {
 
     private SensorEventListener setListenerSensor(final Sensor sensor){
         return new SensorEventListener() {
-
             @Override
             public void onAccuracyChanged(Sensor sensor1, int accuracy) {}
-
             @Override
             public void onSensorChanged(SensorEvent event) {
                 showSensor(event, sensor);
@@ -164,13 +160,10 @@ public class WeatherFragment extends Fragment {
             frameLayout.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
         }
-
         @Override
         protected WeatherRequest doInBackground(City... cities) {
-            //city.putWeatherRequest(ConnectionToGetWeather.getWeatherRequestFromJson(cities[0]));
             return null;
         }
-
         @Override
         protected void onPostExecute(WeatherRequest weatherRequest) {
             super.onPostExecute(weatherRequest);

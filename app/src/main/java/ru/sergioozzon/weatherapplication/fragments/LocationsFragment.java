@@ -1,6 +1,5 @@
 package ru.sergioozzon.weatherapplication.fragments;
 
-
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

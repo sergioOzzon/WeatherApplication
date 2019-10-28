@@ -8,42 +8,8 @@
     app:cardCornerRadius="3dp"
     app:cardElevation="0dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/timeOfHour"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/time" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="2dp" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/iconWeather" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="2dp" />
-
-        <TextView
-            android:id="@+id/tempOfHour"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/temp" />
-    </LinearLayout>
+    <ru.sergioozzon.weatherapplication.CustomViews.WeatherCompoundView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </androidx.cardview.widget.CardView>

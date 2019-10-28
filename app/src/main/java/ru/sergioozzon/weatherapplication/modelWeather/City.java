@@ -17,7 +17,6 @@ public class City implements Serializable {
         cityArrayList.add(this);
     }
 
-
     public String getCityName() {
         return cityName;
     }

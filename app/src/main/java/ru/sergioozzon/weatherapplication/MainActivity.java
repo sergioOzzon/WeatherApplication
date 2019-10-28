@@ -28,14 +28,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     City city;
 
-
     final static String SETTING_FRAGMENT = "setting";
     final static String WEATHER_FRAGMENT = "weather";
     final static String LOCATION_FRAGMENT = "location";
     final static String ABOUT_AS_FRAGMENT = "about as";
     private static final String CURRENT_CITY = "current city";
     public static String currentFragment = WEATHER_FRAGMENT;
-
     private Toolbar toolbar;
     private DrawerLayout drawer;
     FloatingActionButton fab;
@@ -70,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(WeatherFragment.newInstance(city));
         }
         if (savedInstanceState == null) updateWeather();
-
     }
 
     private void initViews() {
@@ -135,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             if (!currentFragment.equals(SETTING_FRAGMENT))
                 loadFragment(new SettingsFragment());
@@ -153,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.nav_setting) {
             if (!currentFragment.equals(SETTING_FRAGMENT))
                 loadFragment(new SettingsFragment());
@@ -177,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //TODO
             Snackbar.make(drawer, "Coming soon", Snackbar.LENGTH_SHORT).show();
         }
-
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

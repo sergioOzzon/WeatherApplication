@@ -1,5 +1,6 @@
 package ru.sergioozzon.weatherapplication;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import com.example.weatherapplication.R;
@@ -9,6 +10,8 @@ import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
 import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
+import ru.sergioozzon.weatherapplication.modelWeather.Weather;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onClick(View view) {
             updateWeather();
+            loadFragment(WeatherFragment.newInstance(city));
         }
     };
 

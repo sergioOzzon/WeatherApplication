@@ -77,7 +77,7 @@ public class WeatherFragment extends Fragment {
         initViews(view);
         UpdateTask updateTask = new UpdateTask();
         updateTask.execute(city);
-        recyclerViewCreation(view);
+        createHourRecyclerView(view);
         getSensors();
     }
 
@@ -119,12 +119,12 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    private void recyclerViewCreation(@NonNull View view) {
+    private void createHourRecyclerView(@NonNull View view) {
         WeatherAdapter adapter = new WeatherAdapter();
-        RecyclerView weatherRecycler = view.findViewById(R.id.weatherRecyclerView);
-        weatherRecycler.setHasFixedSize(true);
-        setDecorator(weatherRecycler);
-        weatherRecycler.setAdapter(adapter);
+        RecyclerView hourWeatherRecycler = view.findViewById(R.id.weatherRecyclerView);
+        hourWeatherRecycler.setHasFixedSize(true);
+        setDecorator(hourWeatherRecycler);
+        hourWeatherRecycler.setAdapter(adapter);
     }
 
     private void initViews(@NonNull View view) {

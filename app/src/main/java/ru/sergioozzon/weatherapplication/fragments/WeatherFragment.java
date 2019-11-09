@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.weatherapplication.R;
@@ -31,6 +32,7 @@ public class WeatherFragment extends Fragment {
     private static final String CURRENT_CITY = "currentCity";
     private City city;
     private FrameLayout frameLayout;
+    private LinearLayout sensorsLayout;
     private ProgressBar progressBar;
     private TextView cityNameTextView;
     private TextView cityTempTextView;
@@ -43,6 +45,8 @@ public class WeatherFragment extends Fragment {
     private SensorManager sensorManager;
     private Sensor sensorTemp;
     private Sensor sensorHumid;
+    private boolean isSensorsEnable = false;
+
 
     private WeatherFragment() {
     }
@@ -78,23 +82,31 @@ public class WeatherFragment extends Fragment {
         UpdateTask updateTask = new UpdateTask();
         updateTask.execute(city);
         createHourRecyclerView(view);
-        getSensors();
+        if(isSensorsEnable) {
+            sensorsLayout.setVisibility(View.VISIBLE);
+            getSensors();
+
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        sensorManager.registerListener(setListenerSensor(sensorTemp), sensorTemp,
-                SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(setListenerSensor(sensorHumid), sensorHumid,
-                SensorManager.SENSOR_DELAY_NORMAL);
+        if (isSensorsEnable) {
+            sensorManager.registerListener(setListenerSensor(sensorTemp), sensorTemp,
+                    SensorManager.SENSOR_DELAY_NORMAL);
+            sensorManager.registerListener(setListenerSensor(sensorHumid), sensorHumid,
+                    SensorManager.SENSOR_DELAY_NORMAL);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(setListenerSensor(sensorTemp), sensorTemp);
-        sensorManager.unregisterListener(setListenerSensor(sensorHumid), sensorHumid);
+        if (isSensorsEnable) {
+            sensorManager.unregisterListener(setListenerSensor(sensorTemp), sensorTemp);
+            sensorManager.unregisterListener(setListenerSensor(sensorHumid), sensorHumid);
+        }
     }
 
     private SensorEventListener setListenerSensor(final Sensor sensor){
@@ -136,8 +148,9 @@ public class WeatherFragment extends Fragment {
         tempOnDayTextView = view.findViewById(R.id.tempOnDay);
         currentDateTextView = view.findViewById(R.id.currentDate);
         updateTime = view.findViewById(R.id.updateTime);
-        tempSensorTextView = view.findViewById(R.id.temprature_sensor);
+        tempSensorTextView = view.findViewById(R.id.temperature_sensor);
         humidSensorTextView = view.findViewById(R.id.humidity_sensor);
+        sensorsLayout = view.findViewById(R.id.sensorsLayout);
     }
 
     private void setDecorator(RecyclerView weatherRecycler) {

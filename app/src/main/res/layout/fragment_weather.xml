@@ -142,24 +142,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="15dp" />
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/sensorsLayout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sensors" />
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
-                <TextView
-                    android:id="@+id/temprature_sensor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/temprature_sensor" />
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sensors" />
 
-                <TextView
-                    android:id="@+id/humidity_sensor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/humidity_sensor" />
+                    <TextView
+                        android:id="@+id/temperature_sensor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temperature_sensor" />
 
+                    <TextView
+                        android:id="@+id/humidity_sensor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/humidity_sensor" />
+
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

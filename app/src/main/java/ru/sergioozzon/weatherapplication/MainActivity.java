@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onClick(View view) {
             updateWeather();
+            city = City.getCurrentCity();
             loadFragment(WeatherFragment.newInstance(city));
         }
     };

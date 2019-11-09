@@ -8,7 +8,7 @@
     app:cardCornerRadius="3dp"
     app:cardElevation="0dp">
 
-    <ru.sergioozzon.weatherapplication.CustomViews.WeatherCompoundView
+    <ru.sergioozzon.weatherapplication.customViews.WeatherCompoundView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

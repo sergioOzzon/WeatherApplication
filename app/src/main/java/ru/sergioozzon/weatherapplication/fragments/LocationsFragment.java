@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.weatherapplication.R;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.RecyclerViewAdapters.LocationsAdapter;
+import ru.sergioozzon.weatherapplication.recyclerViewAdapters.LocationsAdapter;
 import ru.sergioozzon.weatherapplication.MainActivity;
 
 public class LocationsFragment extends Fragment {

@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.GregorianCalendar;
-import java.util.stream.Collectors;
 import javax.net.ssl.HttpsURLConnection;
 
 public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
@@ -21,17 +20,23 @@ public class ConnectionToGetWeather extends AsyncTask<Void, Void, Void> {
         String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city.getCityName() + ",RU&appid=240af58b6f095eb759a3ecd2d282d448";
 
         try {
-            String result;
             final URL uri = new URL(WEATHER_URL);
             HttpsURLConnection urlConnection;
             urlConnection = (HttpsURLConnection) uri.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setReadTimeout(10000);
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            result = in.lines().collect(Collectors.joining("\n"));
-            Log.d("RESULT OF CONNECTION", result);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            StringBuilder rawData = new StringBuilder(1024);
+            String tempVariable;
+
+            while ((tempVariable = reader.readLine()) != null) {
+                rawData.append(tempVariable).append("\n");
+            }
+
+            reader.close();
+            Log.d("RESULT OF CONNECTION", rawData.toString());
             Gson gson = new Gson();
-            weatherRequest = gson.fromJson(result, WeatherRequest.class);
+            weatherRequest = gson.fromJson(rawData.toString(), WeatherRequest.class);
             weatherRequest.setUpdateDate(new GregorianCalendar());
 
         } catch (ProtocolException e) {

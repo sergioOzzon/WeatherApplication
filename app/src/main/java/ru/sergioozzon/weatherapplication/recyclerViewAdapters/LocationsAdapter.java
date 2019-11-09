@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication.RecyclerViewAdapters;
+package ru.sergioozzon.weatherapplication.recyclerViewAdapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

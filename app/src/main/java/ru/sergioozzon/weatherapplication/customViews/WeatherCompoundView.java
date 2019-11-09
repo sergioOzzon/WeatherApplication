@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication.CustomViews;
+package ru.sergioozzon.weatherapplication.customViews;
 
 import android.content.Context;
 import android.util.AttributeSet;

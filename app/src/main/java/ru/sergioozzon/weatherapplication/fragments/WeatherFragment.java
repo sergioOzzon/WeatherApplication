@@ -21,7 +21,7 @@ import java.text.DateFormat;
 import java.util.Locale;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import ru.sergioozzon.weatherapplication.RecyclerViewAdapters.WeatherAdapter;
+import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
 import static android.content.Context.SENSOR_SERVICE;

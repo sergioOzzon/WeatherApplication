@@ -11,7 +11,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class JsonFromConn implements Connection {
+public class JsonLoader implements DataLoader {
 
     StringBuilder rawData;
 

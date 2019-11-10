@@ -1,5 +1,5 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
-public interface Connection {
+public interface DataLoader {
     String getData(String url);
 }

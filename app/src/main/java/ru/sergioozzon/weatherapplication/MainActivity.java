@@ -8,7 +8,7 @@ import ru.sergioozzon.weatherapplication.fragments.LocationsFragment;
 import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
 import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.modelWeather.ConnectionToGetWeather;
+import ru.sergioozzon.weatherapplication.modelWeather.RequestData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void updateWeather() {
-        ConnectionToGetWeather connection = new ConnectionToGetWeather();
+        RequestData connection = new RequestData();
         connection.execute();
     }
 

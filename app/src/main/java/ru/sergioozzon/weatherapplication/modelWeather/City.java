@@ -2,6 +2,7 @@ package ru.sergioozzon.weatherapplication.modelWeather;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
 
 public class City implements Serializable {
 

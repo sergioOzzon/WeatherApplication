@@ -24,7 +24,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
 import static android.content.Context.SENSOR_SERVICE;
 
 public class WeatherFragment extends Fragment {
@@ -175,20 +175,26 @@ public class WeatherFragment extends Fragment {
         }
         @Override
         protected WeatherRequest doInBackground(City... cities) {
-            return null;
+            JsonDataLoader loader = new JsonDataLoader();
+            loader.update(cities[0]);
+            return cities[0].getWeatherRequest();
         }
         @Override
         protected void onPostExecute(WeatherRequest weatherRequest) {
             super.onPostExecute(weatherRequest);
-            Locale locale = new Locale(Locale.ENGLISH.getLanguage());
-            DateFormat dateFormat = DateFormat.getDateInstance();
-            DateFormat timeFormat = DateFormat.getTimeInstance();
-            cityNameTextView.setText(String.valueOf(city.getCityName()));
-            currentDateTextView.setText(dateFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
-            updateTime.setText(timeFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
-            cityTempTextView.setText(String.format(locale, "%.0f °C", city.getWeatherRequest().getMain().getTemp()));
-            descriptionTextView.setText(String.valueOf(city.getWeatherRequest().getWeather()[0].getDescription()));
-            tempOnDayTextView.setText(String.format(locale,"%.0f °C/%.0f °C", city.getWeatherRequest().getMain().getTemp_min(), city.getWeatherRequest().getMain().getTemp_max()));
+            if (weatherRequest != null) {
+                Locale locale = new Locale(Locale.ENGLISH.getLanguage());
+                DateFormat dateFormat = DateFormat.getDateInstance();
+                DateFormat timeFormat = DateFormat.getTimeInstance();
+                cityNameTextView.setText(String.valueOf(city.getCityName()));
+                //currentDateTextView.setText(dateFormat.format(weatherRequest.getUpdateDate().getTime()));
+                //updateTime.setText(timeFormat.format(weatherRequest.getUpdateDate().getTime()));
+                cityTempTextView.setText(String.format(locale, "%.0f °C", weatherRequest.getMain().getTemp()));
+                descriptionTextView.setText(String.valueOf(weatherRequest.getWeather()[0].getDescription()));
+                tempOnDayTextView.setText(String.format(locale, "%.0f °C/%.0f °C", weatherRequest.getMain().getTempMin(), city.getWeatherRequest().getMain().getTempMax()));
+            } else {
+                cityNameTextView.setText("Ошибка");
+            }
             frameLayout.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
         }

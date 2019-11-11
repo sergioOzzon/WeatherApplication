@@ -8,7 +8,7 @@ import ru.sergioozzon.weatherapplication.fragments.LocationsFragment;
 import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
 import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.modelWeather.RequestData;
+import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -66,10 +66,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             city = City.getCurrentCity();
         }
+        if (savedInstanceState == null) updateWeather();
         if (currentFragment.equals(WEATHER_FRAGMENT)) {
             loadFragment(WeatherFragment.newInstance(city));
         }
-        if (savedInstanceState == null) updateWeather();
+
     }
 
     private void initViews() {
@@ -99,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void updateWeather() {
-        RequestData connection = new RequestData();
-        connection.execute();
+        JsonDataLoader loader = new JsonDataLoader();
+        loader.execute(city);
     }
 
     private void loadFragment(Fragment fragment){

@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.weatherapplication.R;
+
+import java.util.Locale;
+
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.ViewHolder> {
@@ -28,7 +31,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         boolean isData = City.getCityArrayList().get(position).getWeatherRequest().getMain() != null;
         if (isData) {
             holder.getCityName().setText(String.valueOf(City.getCityArrayList().get(position).getCityName()));
-            holder.getCurrentTemp().setText(String.format("%.0f °C", City.getCityArrayList().get(position).getWeatherRequest().getMain().getTemp()));
+            holder.getCurrentTemp().setText(String.format(Locale.getDefault(), "%.0f °C", City.getCityArrayList().get(position).getWeatherRequest().getMain().getTemp()));
         }
     }
 

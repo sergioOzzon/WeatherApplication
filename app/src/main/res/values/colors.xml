@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#7E57C2</color>
-    <color name="colorPrimaryDark">#4527A0</color>
-    <color name="colorAccent">#B388FF</color>
+    <color name="colorPrimary">#1E88E5</color>
+    <color name="colorPrimaryDark">#1565C0</color>
+    <color name="colorAccent">#1976D2</color>
     <color name="colorFont">#000000</color>
+    <color name="startColorGradient">#81D4FA</color>
+    <color name="cardBackground">#85C2F8</color>
 </resources>

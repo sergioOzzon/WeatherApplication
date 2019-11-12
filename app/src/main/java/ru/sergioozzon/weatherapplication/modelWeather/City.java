@@ -2,9 +2,7 @@ package ru.sergioozzon.weatherapplication.modelWeather;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
+import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
 
 public class City implements Serializable {
 
@@ -12,15 +10,14 @@ public class City implements Serializable {
     private WeatherRequest weatherRequest;
     private static ArrayList<City> cityArrayList = new ArrayList<>();
     private static City currentCity;
+    public static boolean dataIsExist = false;
 
     public City(String cityName){
         this.cityName = cityName;
         weatherRequest = new WeatherRequest();
         weatherRequest.setName(cityName);
         cityArrayList.add(this);
-        currentCity = this;
     }
-
 
     public String getCityName() {
         return cityName;
@@ -28,8 +25,9 @@ public class City implements Serializable {
 
     public WeatherRequest getWeatherRequest() { return weatherRequest; }
 
-    public void putWeatherRequest(WeatherRequest weatherRequest) {
+    void putWeatherRequest(WeatherRequest weatherRequest) {
         this.weatherRequest = weatherRequest;
+        weatherRequest.setUpdateDate();
     }
 
     public static ArrayList<City> getCityArrayList() {

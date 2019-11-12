@@ -40,4 +40,21 @@
     <string name="about_as_content">The author of this application Sergey Smirnov. The application is developed as part of training on GeekBrains.</string>
     <string name="send_feedback">Send feedback</string>
     <string name="share">Share</string>
+    <string name="currentDate">DATE</string>
+    <string name="update_time">UPDATE_TIME</string>
+    <string name="updated">updated:</string>
+    <string name="sensors" translatable="false">SENSORS:</string>
+    <string name="has_been_updated">Weather data has been updated</string>
+    <string name="temperature_sensor">TEMPERATURE_SENSOR</string>
+    <string name="humidity_sensor">HUMIDITY_SENSOR</string>
+    <string name="application">Application</string>
+
+    <string name="weather_sunny">&#xf00d;</string>
+    <string name="weather_clear_night">&#xf02e;</string>
+    <string name="weather_foggy">&#xf014;</string>
+    <string name="weather_cloudy">&#xf013;</string>
+    <string name="weather_rainy">&#xf019;</string>
+    <string name="weather_snowy">&#xf01b;</string>
+    <string name="weather_thunder">&#xf01e;</string>
+    <string name="weather_drizzle">&#xf01c;</string>
 </resources>

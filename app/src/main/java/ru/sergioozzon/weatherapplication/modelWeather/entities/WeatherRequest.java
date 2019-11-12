@@ -125,7 +125,11 @@ public class WeatherRequest implements Serializable {
         this.cod = cod;
     }
 
+    public void setUpdateDate() {
+        this.calendar = new GregorianCalendar();
+    }
+
     public Calendar getUpdateDate() {
-        return calendar = new GregorianCalendar();
+        return calendar;
     }
 }

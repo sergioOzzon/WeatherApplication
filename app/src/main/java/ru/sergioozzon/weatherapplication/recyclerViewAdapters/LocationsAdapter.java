@@ -12,6 +12,7 @@ import com.example.weatherapplication.R;
 import java.util.Locale;
 
 import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.ViewHolder> {
 

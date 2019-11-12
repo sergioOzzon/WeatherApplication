@@ -1,6 +1,8 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import retrofit2.Response;
@@ -12,6 +14,7 @@ public class JsonDataLoader extends AsyncTask<Void, Void, Void>{
         Response response = OpenWeatherRepo.getSingleton().getAPI().loadWeather(city.getCityName() + ",ru",
                 "762ee61f52313fbd10a4eb54ae4d4de2", "metric")
                 .execute();
+        Log.d("RESPONSE_RESULT", response.toString());
         city.putWeatherRequest((WeatherRequest)response.body());
     }
 

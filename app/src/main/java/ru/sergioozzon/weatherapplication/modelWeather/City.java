@@ -10,6 +10,7 @@ public class City implements Serializable {
     private WeatherRequest weatherRequest;
     private static ArrayList<City> cityArrayList = new ArrayList<>();
     private static City currentCity;
+    public static boolean dataIsExist = false;
 
     public City(String cityName){
         this.cityName = cityName;
@@ -26,6 +27,7 @@ public class City implements Serializable {
 
     void putWeatherRequest(WeatherRequest weatherRequest) {
         this.weatherRequest = weatherRequest;
+        weatherRequest.setUpdateDate();
     }
 
     public static ArrayList<City> getCityArrayList() {

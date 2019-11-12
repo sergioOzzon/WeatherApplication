@@ -22,6 +22,8 @@ import java.text.DateFormat;
 import java.util.Locale;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
@@ -176,7 +178,11 @@ public class WeatherFragment extends Fragment {
         @Override
         protected WeatherRequest doInBackground(City... cities) {
             JsonDataLoader loader = new JsonDataLoader();
-            loader.update(cities[0]);
+            try {
+                loader.update(cities[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return cities[0].getWeatherRequest();
         }
         @Override

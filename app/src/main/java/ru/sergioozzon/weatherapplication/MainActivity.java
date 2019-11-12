@@ -9,6 +9,8 @@ import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
 import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -23,6 +25,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     View.OnClickListener clickListenerOnFabForUpdate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            updateWeather();
+            JsonDataLoader loader = new JsonDataLoader();
+            loader.execute();
             city = City.getCurrentCity();
             loadFragment(WeatherFragment.newInstance(city));
         }
@@ -66,11 +71,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             city = City.getCurrentCity();
         }
-        if (savedInstanceState == null) updateWeather();
         if (currentFragment.equals(WEATHER_FRAGMENT)) {
             loadFragment(WeatherFragment.newInstance(city));
         }
-
     }
 
     private void initViews() {
@@ -97,11 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void updateWeather() {
-        JsonDataLoader loader = new JsonDataLoader();
-        loader.update(city);
     }
 
     private void loadFragment(Fragment fragment){

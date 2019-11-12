@@ -47,4 +47,5 @@
     <string name="temperature_sensor">TEMPERATURE_SENSOR</string>
     <string name="humidity_sensor">HUMIDITY_SENSOR</string>
     <string name="application">Application</string>
+    <string name="has_been_updated">Weather data has been updated</string>
 </resources>

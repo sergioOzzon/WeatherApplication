@@ -44,5 +44,6 @@
     <string name="send_feedback">Написать отзыв</string>
     <string name="share">Поделиться</string>
     <string name="about_as_content">Автор данного приложения Сергей Смирнов. Приложение разработано в рамках обучения на GeekBrains.</string>
+    <string name="has_been_updated">Weather data has been updated</string>
 
 </resources>

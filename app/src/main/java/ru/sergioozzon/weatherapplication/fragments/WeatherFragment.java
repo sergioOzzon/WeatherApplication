@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,13 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.weatherapplication.R;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Locale;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.modelWeather.WeatherRequest;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
 import static android.content.Context.SENSOR_SERVICE;
 
 public class WeatherFragment extends Fragment {
@@ -175,22 +180,39 @@ public class WeatherFragment extends Fragment {
         }
         @Override
         protected WeatherRequest doInBackground(City... cities) {
-            return null;
+                WeatherRequest weatherRequests = cities[0].getWeatherRequest();
+                while (weatherRequests.getMain() == null){
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return weatherRequests;
         }
         @Override
         protected void onPostExecute(WeatherRequest weatherRequest) {
             super.onPostExecute(weatherRequest);
-            Locale locale = new Locale(Locale.ENGLISH.getLanguage());
-            DateFormat dateFormat = DateFormat.getDateInstance();
-            DateFormat timeFormat = DateFormat.getTimeInstance();
-            cityNameTextView.setText(String.valueOf(city.getCityName()));
-            currentDateTextView.setText(dateFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
-            updateTime.setText(timeFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
-            cityTempTextView.setText(String.format(locale, "%.0f °C", city.getWeatherRequest().getMain().getTemp()));
-            descriptionTextView.setText(String.valueOf(city.getWeatherRequest().getWeather()[0].getDescription()));
-            tempOnDayTextView.setText(String.format(locale,"%.0f °C/%.0f °C", city.getWeatherRequest().getMain().getTemp_min(), city.getWeatherRequest().getMain().getTemp_max()));
-            frameLayout.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
+            if (weatherRequest != null) {
+                Locale locale = new Locale(Locale.ENGLISH.getLanguage());
+                DateFormat dateFormat = DateFormat.getDateInstance();
+                DateFormat timeFormat = DateFormat.getTimeInstance();
+                cityNameTextView.setText(String.valueOf(city.getCityName()));
+                currentDateTextView.setText(dateFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
+                updateTime.setText(timeFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
+                cityTempTextView.setText(String.format(locale, "%.0f °C", city.getWeatherRequest().getMain().getTemp()));
+                descriptionTextView.setText(String.valueOf(city.getWeatherRequest().getWeather()[0].getDescription()));
+                tempOnDayTextView.setText(String.format(locale, "%.0f °C/%.0f °C", city.getWeatherRequest().getMain().getTempMin(), city.getWeatherRequest().getMain().getTempMax()));
+                progressBar.setVisibility(View.INVISIBLE);
+                frameLayout.setVisibility(View.VISIBLE);
+            } else {
+                TextView errorTextView = new TextView(getContext());
+                ConstraintLayout layout = getActivity().findViewById(R.id.WeatherLayout);
+                layout.addView(errorTextView);
+                errorTextView.setText("Ошибка");
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
         }
     }
 }

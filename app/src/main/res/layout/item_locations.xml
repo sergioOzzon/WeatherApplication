@@ -17,10 +17,13 @@
         android:layout_weight="5"
         android:orientation="horizontal">
 
-        <Space
+        <TextView
+            android:id="@+id/iconInLocationItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="5" />
+            android:layout_weight="4"
+            android:text="@string/iconWeather"
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/cityNameInCitiesRecycler"

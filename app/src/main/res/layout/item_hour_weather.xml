@@ -4,9 +4,11 @@
     android:layout_width="60dp"
     android:layout_height="90dp"
     android:orientation="vertical"
-    app:cardBackgroundColor="#16FFFFFF"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="0dp">
+    app:cardBackgroundColor="#8BFFFFFF"
+    app:cardCornerRadius="@dimen/card_corner"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="false">
 
     <ru.sergioozzon.weatherapplication.customViews.WeatherCompoundView
         android:layout_width="wrap_content"

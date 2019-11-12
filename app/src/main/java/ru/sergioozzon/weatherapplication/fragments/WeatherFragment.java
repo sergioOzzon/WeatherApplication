@@ -22,6 +22,7 @@ import com.example.weatherapplication.R;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -47,6 +48,7 @@ public class WeatherFragment extends Fragment {
     private TextView updateTime;
     private TextView tempSensorTextView;
     private TextView humidSensorTextView;
+    private TextView weatherIconTextView;
     private SensorManager sensorManager;
     private Sensor sensorTemp;
     private Sensor sensorHumid;
@@ -156,6 +158,7 @@ public class WeatherFragment extends Fragment {
         tempSensorTextView = view.findViewById(R.id.temperature_sensor);
         humidSensorTextView = view.findViewById(R.id.humidity_sensor);
         sensorsLayout = view.findViewById(R.id.sensorsLayout);
+        weatherIconTextView = view.findViewById(R.id.iconWeather);
     }
 
     private void setDecorator(RecyclerView weatherRecycler) {
@@ -203,6 +206,9 @@ public class WeatherFragment extends Fragment {
                 cityTempTextView.setText(String.format(locale, "%.0f °C", city.getWeatherRequest().getMain().getTemp()));
                 descriptionTextView.setText(String.valueOf(city.getWeatherRequest().getWeather()[0].getDescription()));
                 tempOnDayTextView.setText(String.format(locale, "%.0f °C/%.0f °C", city.getWeatherRequest().getMain().getTempMin(), city.getWeatherRequest().getMain().getTempMax()));
+                setWeatherIcon(city.getWeatherRequest().getWeather()[0].getId(),
+                        city.getWeatherRequest().getSys().getSunrise() * 1000,
+                        city.getWeatherRequest().getSys().getSunset() * 1000);
                 progressBar.setVisibility(View.INVISIBLE);
                 frameLayout.setVisibility(View.VISIBLE);
             } else {
@@ -214,5 +220,49 @@ public class WeatherFragment extends Fragment {
             }
 
         }
+    }
+
+    private void setWeatherIcon(int actualId, long sunrise, long sunset) {
+        int id = actualId / 100;
+        String icon = "";
+
+        if (actualId == 800) {
+            long currentTime = new Date().getTime();
+            if (currentTime >= sunrise && currentTime < sunset) {
+                icon = "\u2600";
+                //icon = getString(R.string.weather_sunny);
+            } else {
+                icon = getString(R.string.weather_clear_night);
+            }
+        } else {
+            switch (id) {
+                case 2: {
+                    icon = getString(R.string.weather_thunder);
+                    break;
+                }
+                case 3: {
+                    icon = getString(R.string.weather_drizzle);
+                    break;
+                }
+                case 5: {
+                    icon = getString(R.string.weather_rainy);
+                    break;
+                }
+                case 6: {
+                    icon = getString(R.string.weather_snowy);
+                    break;
+                }
+                case 7: {
+                    icon = getString(R.string.weather_foggy);
+                    break;
+                }
+                case 8: {
+                    icon = "\u2601";
+                    // icon = getString(R.string.weather_cloudy);
+                    break;
+                }
+            }
+        }
+        weatherIconTextView.setText(icon);
     }
 }

@@ -46,4 +46,17 @@
     <string name="about_as_content">Автор данного приложения Сергей Смирнов. Приложение разработано в рамках обучения на GeekBrains.</string>
     <string name="has_been_updated">Weather data has been updated</string>
 
+    <string name="temperature_sensor">TEMPERATURE_SENSOR</string>
+    <string name="humidity_sensor">HUMIDITY_SENSOR</string>
+    <string name="application">Application</string>
+
+    <string name="weather_sunny">&#xf00d;</string>
+    <string name="weather_clear_night">&#xf02e;</string>
+    <string name="weather_foggy">&#xf014;</string>
+    <string name="weather_cloudy">&#xf013;</string>
+    <string name="weather_rainy">&#xf019;</string>
+    <string name="weather_snowy">&#xf01b;</string>
+    <string name="weather_thunder">&#xf01e;</string>
+    <string name="weather_drizzle">&#xf01c;</string>
+
 </resources>

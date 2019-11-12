@@ -187,8 +187,8 @@ public class WeatherFragment extends Fragment {
                 DateFormat dateFormat = DateFormat.getDateInstance();
                 DateFormat timeFormat = DateFormat.getTimeInstance();
                 cityNameTextView.setText(String.valueOf(city.getCityName()));
-                //currentDateTextView.setText(dateFormat.format(weatherRequest.getUpdateDate().getTime()));
-                //updateTime.setText(timeFormat.format(weatherRequest.getUpdateDate().getTime()));
+                currentDateTextView.setText(dateFormat.format(weatherRequest.getUpdateDate().getTime()));
+                updateTime.setText(timeFormat.format(weatherRequest.getUpdateDate().getTime()));
                 cityTempTextView.setText(String.format(locale, "%.0f °C", weatherRequest.getMain().getTemp()));
                 descriptionTextView.setText(String.valueOf(weatherRequest.getWeather()[0].getDescription()));
                 tempOnDayTextView.setText(String.format(locale, "%.0f °C/%.0f °C", weatherRequest.getMain().getTempMin(), city.getWeatherRequest().getMain().getTempMax()));

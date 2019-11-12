@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void updateWeather() {
         JsonDataLoader loader = new JsonDataLoader();
-        loader.execute(city);
+        loader.update(city);
     }
 
     private void loadFragment(Fragment fragment){

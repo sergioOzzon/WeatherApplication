@@ -8,7 +8,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
 
-public class JsonDataLoader extends AsyncTask<City, Void, Void> {
+public class JsonDataLoader {
 
     public void update(final City city) {
         OpenWeatherRepo.getSingleton().getAPI().loadWeather(city.getCityName() + ",ru",
@@ -19,7 +19,7 @@ public class JsonDataLoader extends AsyncTask<City, Void, Void> {
                                            @NonNull Response<WeatherRequest> response) {
                         if (response.body() != null && response.isSuccessful()) {
                             Log.d("JSON_RESULT", response.message());
-                            putWeatherRequest(response.body(), city);
+                            city.putWeatherRequest(response.body());
                         }
                     }
 
@@ -28,15 +28,5 @@ public class JsonDataLoader extends AsyncTask<City, Void, Void> {
 
                     }
                 });
-    }
-
-    private void putWeatherRequest(WeatherRequest body, City city) {
-        city.putWeatherRequest(body);
-    }
-
-    @Override
-    protected Void doInBackground(City... cities) {
-        update(cities[0]);
-        return null;
     }
 }

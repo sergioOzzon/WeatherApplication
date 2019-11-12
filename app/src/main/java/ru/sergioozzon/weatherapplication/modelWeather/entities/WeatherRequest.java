@@ -3,6 +3,7 @@ package ru.sergioozzon.weatherapplication.modelWeather.entities;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class WeatherRequest implements Serializable {
     @SerializedName("coord") private Coord coordinates;
@@ -125,9 +126,6 @@ public class WeatherRequest implements Serializable {
     }
 
     public Calendar getUpdateDate() {
-        return calendar;
-    }
-    public void setUpdateDate(Calendar calendar) {
-        this.calendar = calendar;
+        return calendar = new GregorianCalendar();
     }
 }

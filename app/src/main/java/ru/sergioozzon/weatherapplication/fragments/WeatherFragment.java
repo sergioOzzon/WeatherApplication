@@ -19,15 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.weatherapplication.R;
-
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-
-import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
@@ -89,7 +85,7 @@ public class WeatherFragment extends Fragment {
         UpdateTask updateTask = new UpdateTask();
         updateTask.execute(city);
         createHourRecyclerView(view);
-        if(isSensorsEnable) {
+        if (isSensorsEnable) {
             sensorsLayout.setVisibility(View.VISIBLE);
             getSensors();
 
@@ -116,10 +112,12 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    private SensorEventListener setListenerSensor(final Sensor sensor){
+    private SensorEventListener setListenerSensor(final Sensor sensor) {
         return new SensorEventListener() {
             @Override
-            public void onAccuracyChanged(Sensor sensor1, int accuracy) {}
+            public void onAccuracyChanged(Sensor sensor1, int accuracy) {
+            }
+
             @Override
             public void onSensorChanged(SensorEvent event) {
                 showSensor(event, sensor);
@@ -127,12 +125,12 @@ public class WeatherFragment extends Fragment {
         };
     }
 
-    private void showSensor(SensorEvent event, Sensor sensor){
+    private void showSensor(SensorEvent event, Sensor sensor) {
         StringBuilder stringBuilder = new StringBuilder();
         if (sensor.getName().equals(sensorTemp.getName())) {
             stringBuilder.append("Temperature Sensor value = ").append(event.values[0]);
             tempSensorTextView.setText(stringBuilder);
-        } else if (sensor.getName().equals(sensorHumid.getName())){
+        } else if (sensor.getName().equals(sensorHumid.getName())) {
             stringBuilder.append("Humidity Sensor value = ").append(event.values[0]);
             humidSensorTextView.setText(stringBuilder);
         }
@@ -173,7 +171,7 @@ public class WeatherFragment extends Fragment {
         sensorHumid = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
     }
 
-    class UpdateTask extends AsyncTask<City, Void, WeatherRequest>{
+    class UpdateTask extends AsyncTask<City, Void, WeatherRequest> {
 
         @Override
         protected void onPreExecute() {
@@ -181,18 +179,20 @@ public class WeatherFragment extends Fragment {
             frameLayout.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
         }
+
         @Override
         protected WeatherRequest doInBackground(City... cities) {
-                WeatherRequest weatherRequests = cities[0].getWeatherRequest();
-                while (weatherRequests.getMain() == null){
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            WeatherRequest weatherRequests = cities[0].getWeatherRequest();
+            while (weatherRequests.getMain() == null) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                return weatherRequests;
+            }
+            return weatherRequests;
         }
+
         @Override
         protected void onPostExecute(WeatherRequest weatherRequest) {
             super.onPostExecute(weatherRequest);

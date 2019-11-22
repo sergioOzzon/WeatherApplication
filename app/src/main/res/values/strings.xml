@@ -45,8 +45,8 @@
     <string name="updated">updated:</string>
     <string name="sensors" translatable="false">SENSORS:</string>
     <string name="has_been_updated">Weather data has been updated</string>
-    <string name="temperature_sensor">TEMPERATURE_SENSOR</string>
-    <string name="humidity_sensor">HUMIDITY_SENSOR</string>
+    <string name="temperature_sensor">TEMPERATURE_SENSOR: NO DATA</string>
+    <string name="humidity_sensor">HUMIDITY_SENSOR: NO DATA</string>
     <string name="application">Application</string>
 
     <string name="weather_sunny">&#xf00d;</string>
@@ -57,4 +57,5 @@
     <string name="weather_snowy">&#xf01b;</string>
     <string name="weather_thunder">&#xf01e;</string>
     <string name="weather_drizzle">&#xf01c;</string>
+    <string name="iconinlocationitem">iconInLocationItem</string>
 </resources>

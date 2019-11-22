@@ -1,9 +1,12 @@
 package ru.sergioozzon.weatherapplication.recyclerViewAdapters;
 
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -12,6 +15,9 @@ import com.example.weatherapplication.R;
 import java.util.Date;
 import java.util.Locale;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
+
+import static android.content.res.Resources.getAttributeSetSourceResId;
+import static android.content.res.Resources.getSystem;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.ViewHolder> {
 
@@ -33,7 +39,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         if (isData) {
             holder.getCityName().setText(String.valueOf(City.getCityArrayList().get(position).getCityName()));
             holder.getCurrentTemp().setText(String.format(Locale.getDefault(), "%.0f °C", City.getCityArrayList().get(position).getWeatherRequest().getMain().getTemp()));
-            holder.getWeatherIconTextView().setText(setWeatherIcon(City.getCityArrayList().get(position).getWeatherRequest().getWeather()[0].getId(),
+            holder.getWeatherIcon().setText(setWeatherIcon(City.getCityArrayList().get(position).getWeatherRequest().getWeather()[0].getId(),
                     City.getCityArrayList().get(position).getWeatherRequest().getSys().getSunrise() * 1000,
                     City.getCityArrayList().get(position).getWeatherRequest().getSys().getSunset() * 1000));
         }
@@ -59,7 +65,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         if (actualId == 800) {
             long currentTime = new Date().getTime();
             if (currentTime >= sunrise && currentTime < sunset) {
-                icon = "\u2600";
+                icon = "☀";
                 //icon = getString(R.string.weather_sunny);
             } else {
                 icon = Resources.getSystem().getString(R.string.weather_clear_night);
@@ -87,7 +93,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
                     break;
                 }
                 case 8: {
-                    icon = "\u2601";
+                    icon = "☁";
                     // icon = getString(R.string.weather_cloudy);
                     break;
                 }
@@ -96,17 +102,18 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         return icon;
     }
 
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView currentTemp;
         private TextView cityName;
-        private TextView weatherIconTextView;
+        private TextView weatherIcon;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             CardView cardView = itemView.findViewById(R.id.LayoutOfCityInCitiesRecycler);
             currentTemp = itemView.findViewById(R.id.currentTempInCitiesRecycler);
             cityName = itemView.findViewById(R.id.cityNameInCitiesRecycler);
-            weatherIconTextView = itemView.findViewById(R.id.iconInLocationItem);
+            weatherIcon = itemView.findViewById(R.id.iconInLocationItem);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -124,8 +131,8 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
             return cityName;
         }
 
-        TextView getWeatherIconTextView() {
-            return weatherIconTextView;
+        TextView getWeatherIcon() {
+            return weatherIcon;
         }
     }
 }

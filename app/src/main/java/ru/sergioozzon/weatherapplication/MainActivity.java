@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initToolbar();
         initFloatingActionButton();
         initSideMenu();
-        getCityList();
+        getCityListFromDB();
         loadFragment(currentFragment);
         if (savedInstanceState == null) {
             JsonDataLoader loader = new JsonDataLoader();
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void getCityList() {
+    private void getCityListFromDB() {
         if (City.getCityArrayList().size() == 0) {
             city = new City("Surgut");
             City.setCurrentCity(city);

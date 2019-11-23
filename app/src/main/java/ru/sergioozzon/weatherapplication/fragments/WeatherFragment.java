@@ -24,6 +24,8 @@ import com.example.weatherapplication.R;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
@@ -55,8 +57,7 @@ public class WeatherFragment extends Fragment {
     private Sensor sensorHumid;
     private boolean isSensorsEnable = false;
 
-
-    private WeatherFragment() {
+    public WeatherFragment() {
     }
 
     public static WeatherFragment newInstance(City city) {
@@ -168,13 +169,14 @@ public class WeatherFragment extends Fragment {
     }
 
     private void setDecorator(RecyclerView weatherRecycler) {
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.HORIZONTAL);
         itemDecoration.setDrawable(getActivity().getResources().getDrawable(R.drawable.weather_separator));
         weatherRecycler.addItemDecoration(itemDecoration);
     }
 
     private void getSensors() {
-        sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
+        sensorManager = (SensorManager) Objects.requireNonNull(getActivity()).getSystemService(SENSOR_SERVICE);
+        assert sensorManager != null;
         sensorTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
         sensorHumid = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
     }
@@ -223,7 +225,7 @@ public class WeatherFragment extends Fragment {
                 scrollView.setVisibility(View.VISIBLE);
             } else {
                 TextView errorTextView = new TextView(getContext());
-                ConstraintLayout layout = getActivity().findViewById(R.id.WeatherLayout);
+                ConstraintLayout layout = Objects.requireNonNull(getActivity()).findViewById(R.id.WeatherLayout);
                 layout.addView(errorTextView);
                 errorTextView.setText("Ошибка");
                 progressBar.setVisibility(View.INVISIBLE);

@@ -3,10 +3,11 @@ package ru.sergioozzon.weatherapplication.customViews;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.example.weatherapplication.R;
 
-public class WeatherCompoundView extends RelativeLayout {
+public class WeatherCompoundView extends LinearLayout {
     public WeatherCompoundView(Context context) {
         super(context);
         initViews(context);

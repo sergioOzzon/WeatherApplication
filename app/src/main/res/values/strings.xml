@@ -58,4 +58,15 @@
     <string name="weather_thunder" translatable="false"></string>
     <string name="weather_drizzle" translatable="false"></string>
     <string name="iconInLocationItem" translatable="false">iconInLocationItem</string>
+    <string name="iconinlocationitem">iconInLocationItem</string>
+    <string name="icon_of_weather">iconWeather</string>
+    <string name="iconhourweather">iconHourWeather</string>
+    <string name="iconHumidity">iconHumidity</string>
+    <string name="iconPressure">iconPressure</string>
+    <string name="iconWind">iconWind</string>
+    <string name="wind">WIND</string>
+    <string name="pressure">PRESSURE</string>
+    <string name="humidity">HUMIDITY</string>
+    <string name="metersPerSecond">m/s</string>
+    <string name="mmHgPost">mm Hg</string>
 </resources>

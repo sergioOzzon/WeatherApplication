@@ -2,7 +2,9 @@ package ru.sergioozzon.weatherapplication.modelWeather.entities;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Sys {
+import java.io.Serializable;
+
+public class Sys implements Serializable {
     @SerializedName("type") private int type;
     @SerializedName("id") private int id;
     @SerializedName("message") private float message;

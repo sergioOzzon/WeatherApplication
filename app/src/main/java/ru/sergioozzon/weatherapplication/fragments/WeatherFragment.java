@@ -1,5 +1,6 @@
 package ru.sergioozzon.weatherapplication.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
@@ -14,9 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.example.weatherapplication.R;
 import java.text.DateFormat;
@@ -33,7 +35,7 @@ public class WeatherFragment extends Fragment {
 
     private static final String CURRENT_CITY = "currentCity";
     private City city;
-    private FrameLayout frameLayout;
+    private ScrollView scrollView;
     private LinearLayout sensorsLayout;
     private ProgressBar progressBar;
     private TextView cityNameTextView;
@@ -44,7 +46,10 @@ public class WeatherFragment extends Fragment {
     private TextView updateTime;
     private TextView tempSensorTextView;
     private TextView humidSensorTextView;
-    private TextView weatherIconTextView;
+    private TextView humidityTextView;
+    private TextView windTextView;
+    private TextView pressureTextView;
+    private ImageView weatherIcon;
     private SensorManager sensorManager;
     private Sensor sensorTemp;
     private Sensor sensorHumid;
@@ -145,7 +150,7 @@ public class WeatherFragment extends Fragment {
     }
 
     private void initViews(@NonNull View view) {
-        frameLayout = view.findViewById(R.id.frameInWeatherFragment);
+        scrollView = view.findViewById(R.id.scrollView);
         progressBar = view.findViewById(R.id.progressBar2);
         cityNameTextView = view.findViewById(R.id.cityName);
         cityTempTextView = view.findViewById(R.id.cityTemp);
@@ -156,7 +161,10 @@ public class WeatherFragment extends Fragment {
         tempSensorTextView = view.findViewById(R.id.temperature_sensor);
         humidSensorTextView = view.findViewById(R.id.humidity_sensor);
         sensorsLayout = view.findViewById(R.id.sensorsLayout);
-        weatherIconTextView = view.findViewById(R.id.iconWeather);
+        weatherIcon = view.findViewById(R.id.iconWeather);
+        humidityTextView = view.findViewById(R.id.humidity_weather);
+        windTextView = view.findViewById(R.id.wind_weather);
+        pressureTextView = view.findViewById(R.id.pressure_weather);
     }
 
     private void setDecorator(RecyclerView weatherRecycler) {
@@ -176,7 +184,7 @@ public class WeatherFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            frameLayout.setVisibility(View.INVISIBLE);
+            scrollView.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -197,20 +205,22 @@ public class WeatherFragment extends Fragment {
         protected void onPostExecute(WeatherRequest weatherRequest) {
             super.onPostExecute(weatherRequest);
             if (weatherRequest != null) {
-                Locale locale = new Locale(Locale.ENGLISH.getLanguage());
                 DateFormat dateFormat = DateFormat.getDateInstance();
                 DateFormat timeFormat = DateFormat.getTimeInstance();
                 cityNameTextView.setText(String.valueOf(city.getCityName()));
                 currentDateTextView.setText(dateFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
                 updateTime.setText(timeFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
-                cityTempTextView.setText(String.format(locale, "%.0f °C", city.getWeatherRequest().getMain().getTemp()));
+                cityTempTextView.setText(String.format(Locale.getDefault(), "%.0f °C", city.getWeatherRequest().getMain().getTemp()));
                 descriptionTextView.setText(String.valueOf(city.getWeatherRequest().getWeather()[0].getDescription()));
-                tempOnDayTextView.setText(String.format(locale, "%.0f °C/%.0f °C", city.getWeatherRequest().getMain().getTempMin(), city.getWeatherRequest().getMain().getTempMax()));
+                tempOnDayTextView.setText(String.format(Locale.getDefault(), "%.0f °C/%.0f °C", city.getWeatherRequest().getMain().getTempMin(), city.getWeatherRequest().getMain().getTempMax()));
+                humidityTextView.setText(String.format(Locale.getDefault(), "%.0f %%", city.getWeatherRequest().getMain().getHumidity()));
+                windTextView.setText(String.format(Locale.getDefault(), "%s %s", city.getWeatherRequest().getWind().getSpeed(), getString(R.string.metersPerSecond)));
+                pressureTextView.setText(String.format(Locale.getDefault(), "%.0f %s", city.getWeatherRequest().getMain().getPressure(), getString(R.string.mmHgPost)));
                 setWeatherIcon(city.getWeatherRequest().getWeather()[0].getId(),
                         city.getWeatherRequest().getSys().getSunrise() * 1000,
                         city.getWeatherRequest().getSys().getSunset() * 1000);
                 progressBar.setVisibility(View.INVISIBLE);
-                frameLayout.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.VISIBLE);
             } else {
                 TextView errorTextView = new TextView(getContext());
                 ConstraintLayout layout = getActivity().findViewById(R.id.WeatherLayout);
@@ -224,45 +234,43 @@ public class WeatherFragment extends Fragment {
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset) {
         int id = actualId / 100;
-        String icon = "";
+        Drawable icon = getResources().getDrawable(R.drawable.unhappy);
 
         if (actualId == 800) {
             long currentTime = new Date().getTime();
             if (currentTime >= sunrise && currentTime < sunset) {
-                icon = "\u2600";
-                //icon = getString(R.string.weather_sunny);
+                icon = getResources().getDrawable(R.drawable.sunny);
             } else {
-                icon = getString(R.string.weather_clear_night);
+                icon = getResources().getDrawable(R.drawable.moon);
             }
         } else {
             switch (id) {
                 case 2: {
-                    icon = getString(R.string.weather_thunder);
+                    icon = getResources().getDrawable(R.drawable.thunder);
                     break;
                 }
                 case 3: {
-                    icon = getString(R.string.weather_drizzle);
+                    icon = getResources().getDrawable(R.drawable.drizzly);
                     break;
                 }
                 case 5: {
-                    icon = getString(R.string.weather_rainy);
+                    icon = getResources().getDrawable(R.drawable.rain);
                     break;
                 }
                 case 6: {
-                    icon = getString(R.string.weather_snowy);
+                    icon = getResources().getDrawable(R.drawable.snowy);
                     break;
                 }
                 case 7: {
-                    icon = getString(R.string.weather_foggy);
+                    icon = getResources().getDrawable(R.drawable.foggy);
                     break;
                 }
                 case 8: {
-                    icon = "\u2601";
-                    // icon = getString(R.string.weather_cloudy);
+                    icon = getResources().getDrawable(R.drawable.cloud);
                     break;
                 }
             }
         }
-        weatherIconTextView.setText(icon);
+        weatherIcon.setImageDrawable(icon);
     }
 }

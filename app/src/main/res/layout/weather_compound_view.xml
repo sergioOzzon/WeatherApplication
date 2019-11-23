@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
@@ -14,13 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="2dp" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <ImageView
+        android:id="@+id/iconHourWeather"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:contentDescription="@string/iconhourweather"
         android:gravity="center"
-        android:text="@string/iconWeather" />
+        android:text="@string/iconWeather"
+        app:srcCompat="@drawable/cloud" />
 
     <Space
         android:layout_width="match_parent"

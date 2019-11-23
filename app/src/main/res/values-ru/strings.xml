@@ -49,5 +49,7 @@
     <string name="temperature_sensor">TEMPERATURE_SENSOR</string>
     <string name="humidity_sensor">HUMIDITY_SENSOR</string>
     <string name="application">Application</string>
+    <string name="metersPerSecond">м/с</string>
+    <string name="mmHgPost">мм рт. ст</string>
 
 </resources>

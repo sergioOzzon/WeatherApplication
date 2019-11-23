@@ -37,7 +37,7 @@ public class LocationsFragment extends Fragment {
     private void recyclerViewCreation(@NonNull View view) {
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.locationsRecyclerView);
-        setDecorator(locationsRecycler);
+        //setDecorator(locationsRecycler);
         locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         locationsRecycler.setHasFixedSize(true);
         locationsRecycler.setAdapter(adapter);

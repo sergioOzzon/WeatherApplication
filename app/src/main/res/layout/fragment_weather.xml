@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context="ru.sergioozzon.weatherapplication.fragments.WeatherFragment">
 
-    <FrameLayout
-        android:id="@+id/frameInWeatherFragment"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,277 +16,251 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layoutInWeatherFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/layoutInWeatherFragment"
+                <Space
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardBackgroundColor="@color/cardColor"
-                        app:cardCornerRadius="@dimen/card_corner"
-                        app:cardPreventCornerOverlap="true"
-                        app:cardUseCompatPadding="true"
-                        app:contentPadding="@dimen/card_corner">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/iconWeather"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="@string/iconWeather"
-                                android:textSize="70dp" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/cityName"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center|start"
-                                    android:text="@string/name"
-                                    android:textColor="@color/colorFont"
-                                    android:textSize="30sp" />
-
-                                <Space
-                                    android:layout_width="match_parent"
-                                    android:layout_height="15dp" />
-
-                                <TextView
-                                    android:id="@+id/currentDate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center|start"
-                                    android:text="@string/currentDate" />
-
-                                <Space
-                                    android:layout_width="match_parent"
-                                    android:layout_height="10dp" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/textView3"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:gravity="center|start"
-                                        android:text="@string/updated"
-                                        android:textSize="12sp" />
-
-                                    <TextView
-                                        android:id="@+id/updateTime"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:gravity="center|start"
-                                        android:text="@string/update_time"
-                                        android:textSize="12sp"
-                                        android:textStyle="bold" />
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardBackgroundColor="@color/cardColor"
-                        app:cardCornerRadius="@dimen/card_corner"
-                        app:cardPreventCornerOverlap="true"
-                        app:cardUseCompatPadding="true"
-                        app:contentPadding="@dimen/card_corner">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/cityDescription"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/description" />
-
-                            <Space
-                                android:layout_width="match_parent"
-                                android:layout_height="15dp" />
-
-                            <TextView
-                                android:id="@+id/cityTemp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/temperature"
-                                android:textColor="@color/colorFont"
-                                android:textSize="60sp" />
-
-                            <Space
-                                android:layout_width="match_parent"
-                                android:layout_height="15dp" />
-
-                            <TextView
-                                android:id="@+id/tempOnDay"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/temp_on_day"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardBackgroundColor="#00FFFFFF"
-                        app:cardCornerRadius="0dp"
-                        app:cardElevation="0dp"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/weatherRecyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/item_hour_weather" />
-                    </androidx.cardview.widget.CardView>
-
-                </LinearLayout>
+                    android:layout_height="8dp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:cardBackgroundColor="@color/cardColor"
                     app:cardCornerRadius="@dimen/card_corner"
                     app:cardPreventCornerOverlap="true"
                     app:cardUseCompatPadding="true"
                     app:contentPadding="@dimen/card_corner">
 
-                    <TableLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iconWeather"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_of_weather"
+                            android:gravity="center"
+                            android:maxWidth="128dp"
+                            android:maxHeight="128dp"
+                            android:minWidth="128dp"
+                            android:minHeight="128dp"
+                            android:text="@string/iconWeather" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/cityName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|start"
+                                android:text="@string/name"
+                                android:textColor="@color/colorFont"
+                                android:textSize="30sp" />
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp" />
+
+                            <TextView
+                                android:id="@+id/currentDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|start"
+                                android:text="@string/currentDate" />
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textView3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center|start"
+                                    android:text="@string/updated"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/updateTime"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center|start"
+                                    android:text="@string/update_time"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardBackgroundColor="@color/cardColor"
+                    app:cardCornerRadius="@dimen/card_corner"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true"
+                    app:contentPadding="@dimen/card_corner">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TableRow
+                        <TextView
+                            android:id="@+id/cityDescription"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/description" />
 
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/textView4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text=""
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/textView5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="TextView" />
-                            </TableRow>
-                        </TableRow>
-
-                        <TableRow
+                        <TextView
+                            android:id="@+id/cityTemp"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/temperature"
+                            android:textColor="@color/colorFont"
+                            android:textSize="60sp" />
 
-                        <TableRow
+                        <TextView
+                            android:id="@+id/tempOnDay"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/temp_on_day"
+                            android:textSize="18sp" />
+                    </LinearLayout>
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-                    </TableLayout>
                 </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    android:id="@+id/sensorsLayout"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:layout_height="match_parent"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
 
-                    <TextView
-                        android:id="@+id/textView6"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/weatherRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/sensors" />
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_hour_weather" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/cardColor"
+                app:cardCornerRadius="@dimen/card_corner"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="@dimen/card_corner">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/temperature_sensor"
+                        android:id="@+id/pressure_weather"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/temperature_sensor" />
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/pressure"
+                        android:gravity="center"
+                        android:text="@string/pressure" />
 
                     <TextView
-                        android:id="@+id/humidity_sensor"
+                        android:id="@+id/wind_weather"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/humidity_sensor" />
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/wind"
+                        android:gravity="center"
+                        android:text="@string/wind" />
+
+                    <TextView
+                        android:id="@+id/humidity_weather"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/humidity"
+                        android:gravity="center"
+                        android:text="@string/humidity" />
 
                 </LinearLayout>
 
-            </LinearLayout>
-        </ScrollView>
+            </androidx.cardview.widget.CardView>
 
-    </FrameLayout>
+            <LinearLayout
+                android:id="@+id/sensorsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sensors" />
+
+                <TextView
+                    android:id="@+id/temperature_sensor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/temperature_sensor" />
+
+                <TextView
+                    android:id="@+id/humidity_sensor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/humidity_sensor" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/frameInWeatherFragment"
-        app:layout_constraintEnd_toEndOf="@+id/frameInWeatherFragment"
-        app:layout_constraintStart_toStartOf="@+id/frameInWeatherFragment"
-        app:layout_constraintTop_toTopOf="@+id/frameInWeatherFragment" />
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView"
+        app:layout_constraintStart_toStartOf="@+id/scrollView"
+        app:layout_constraintTop_toTopOf="@+id/scrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

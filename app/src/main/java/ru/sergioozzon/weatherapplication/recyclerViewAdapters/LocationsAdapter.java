@@ -1,9 +1,11 @@
 package ru.sergioozzon.weatherapplication.recyclerViewAdapters;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -35,7 +37,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         if (isData) {
             holder.getCityName().setText(String.valueOf(City.getCityArrayList().get(position).getCityName()));
             holder.getCurrentTemp().setText(String.format(Locale.getDefault(), "%.0f °C", City.getCityArrayList().get(position).getWeatherRequest().getMain().getTemp()));
-            holder.getWeatherIcon().setText(setWeatherIcon(City.getCityArrayList().get(position).getWeatherRequest().getWeather()[0].getId(),
+            holder.getWeatherIcon().setImageDrawable(setWeatherIcon(City.getCityArrayList().get(position).getWeatherRequest().getWeather()[0].getId(),
                     City.getCityArrayList().get(position).getWeatherRequest().getSys().getSunrise() * 1000,
                     City.getCityArrayList().get(position).getWeatherRequest().getSys().getSunset() * 1000, res));
         }
@@ -54,41 +56,41 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         this.itemClickListener = itemClickListener;
     }
 
-    private String setWeatherIcon(int actualId, long sunrise, long sunset, Resources res) {
+    private Drawable setWeatherIcon(int actualId, long sunrise, long sunset, Resources res) {
         int id = actualId / 100;
-        String icon = "";
+        Drawable icon = res.getDrawable(R.drawable.unhappy);
 
         if (actualId == 800) {
             long currentTime = new Date().getTime();
             if (currentTime >= sunrise && currentTime < sunset) {
-                icon += res.getString(R.string.weather_sunny);
+                icon = res.getDrawable(R.drawable.sunny);
             } else {
-                icon += res.getString(R.string.weather_clear_night);
+                icon = res.getDrawable(R.drawable.moon);
             }
         } else {
             switch (id) {
                 case 2: {
-                    icon += res.getString(R.string.weather_thunder);
+                    icon = res.getDrawable(R.drawable.thunder);
                     break;
                 }
                 case 3: {
-                    icon += res.getString(R.string.weather_drizzle);
+                    icon = res.getDrawable(R.drawable.drizzly);
                     break;
                 }
                 case 5: {
-                    icon += res.getString(R.string.weather_rainy);
+                    icon = res.getDrawable(R.drawable.rain);
                     break;
                 }
                 case 6: {
-                    icon += res.getString(R.string.weather_snowy);
+                    icon = res.getDrawable(R.drawable.snowy);
                     break;
                 }
                 case 7: {
-                    icon += res.getString(R.string.weather_foggy);
+                    icon = res.getDrawable(R.drawable.foggy);
                     break;
                 }
                 case 8: {
-                    icon = res.getString(R.string.weather_cloudy);
+                    icon = res.getDrawable(R.drawable.cloud);
                     break;
                 }
             }
@@ -100,7 +102,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView currentTemp;
         private TextView cityName;
-        private TextView weatherIcon;
+        private ImageView weatherIcon;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,7 +127,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
             return cityName;
         }
 
-        TextView getWeatherIcon() {
+        ImageView getWeatherIcon() {
             return weatherIcon;
         }
     }

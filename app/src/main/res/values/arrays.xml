@@ -10,7 +10,7 @@
         <item>reply_all</item>
     </string-array>
 
-    <string-array name="icon_description">
+    <string-array name="weather_description">
         <item>unhappy</item>
         <item>moon</item>
         <item>foggy</item>
@@ -22,16 +22,4 @@
         <item>sunny</item>
     </string-array>
 
-    <string-array name="icons">
-        <item>@drawable/unhappy</item>
-        <item>@drawable/moon</item>
-        <item>@drawable/foggy</item>
-        <item>@drawable/drizzly</item>
-        <item>@drawable/thunder</item>
-        <item>@drawable/snowy</item>
-        <item>@drawable/rain</item>
-        <item>@drawable/unhappy</item>
-        <item>@drawable/cloud</item>
-        <item>@drawable/sunny</item>
-    </string-array>
 </resources>

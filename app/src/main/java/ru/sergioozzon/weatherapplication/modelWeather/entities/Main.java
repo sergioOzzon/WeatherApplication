@@ -15,7 +15,8 @@ public class Main implements Serializable {
     }
 
     public float getPressure() {
-        return pressure *= 0.7501f;
+        float HgPressure = pressure * 0.7501f;
+        return HgPressure;
     }
 
     public float getHumidity() {

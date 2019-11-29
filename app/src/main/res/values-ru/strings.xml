@@ -51,5 +51,7 @@
     <string name="application">Application</string>
     <string name="metersPerSecond">м/с</string>
     <string name="mmHgPost">мм рт. ст</string>
+    <string name="new_city">Добавить новый город</string>
+    <string name="name_of_the_city">Название города</string>
 
 </resources>

@@ -10,10 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.weatherapplication.R;
 import java.util.Date;
 import java.util.Locale;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.R;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.ViewHolder> {
 

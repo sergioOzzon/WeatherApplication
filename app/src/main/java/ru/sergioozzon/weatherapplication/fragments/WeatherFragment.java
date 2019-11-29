@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +23,23 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.example.weatherapplication.R;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import ru.sergioozzon.weatherapplication.R;
+
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
+
 import static android.content.Context.SENSOR_SERVICE;
 
 public class WeatherFragment extends Fragment {
@@ -88,14 +97,17 @@ public class WeatherFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
-        UpdateTask updateTask = new UpdateTask();
-        updateTask.execute(city);
+        getWeatherData();
         createHourRecyclerView(view);
         if (isSensorsEnable) {
             sensorsLayout.setVisibility(View.VISIBLE);
             getSensors();
-
         }
+    }
+
+    private void getWeatherData() {
+        UpdateTask updateTask = new UpdateTask();
+        updateTask.execute(city);
     }
 
     @Override
@@ -191,16 +203,8 @@ public class WeatherFragment extends Fragment {
         }
 
         @Override
-        protected WeatherRequest doInBackground(City... cities) {
-            WeatherRequest weatherRequests = cities[0].getWeatherRequest();
-            while (weatherRequests.getMain() == null) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            return weatherRequests;
+        protected WeatherRequest doInBackground(final City... cities) {
+            return cities[0].getWeatherRequest();
         }
 
         @Override
@@ -232,6 +236,7 @@ public class WeatherFragment extends Fragment {
             }
 
         }
+
     }
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset) {

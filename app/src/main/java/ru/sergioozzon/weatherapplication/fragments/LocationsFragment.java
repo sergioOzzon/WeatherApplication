@@ -5,21 +5,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.weatherapplication.R;
+import android.widget.Button;
+
+import java.util.Objects;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.LocationsAdapter;
 import ru.sergioozzon.weatherapplication.MainActivity;
+import ru.sergioozzon.weatherapplication.R;
 
 public class LocationsFragment extends Fragment {
 
     private City currentCity;
-    private final static String WEATHER_FRAGMENT = "weather";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,13 +32,19 @@ public class LocationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Button newCityButton = view.findViewById(R.id.newCityButton);
+        newCityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new AddCityFragment(), MainActivity.ADD_CITY_FRAGMENT);
+            }
+        });
         recyclerViewCreation(view);
     }
 
     private void recyclerViewCreation(@NonNull View view) {
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.locationsRecyclerView);
-        //setDecorator(locationsRecycler);
         locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         locationsRecycler.setHasFixedSize(true);
         locationsRecycler.setAdapter(adapter);
@@ -49,24 +56,20 @@ public class LocationsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 currentCity = City.getCityArrayList().get(position);
-                City.setCurrentCity(currentCity);
-                loadFragment(WeatherFragment.newInstance(currentCity));
+                String path = Objects.requireNonNull(getActivity()).getFilesDir().getPath();
+                City.setCurrentCity(currentCity, path);
+                loadFragment(WeatherFragment.newInstance(currentCity), MainActivity.WEATHER_FRAGMENT);
             }
         });
     }
 
-    private void setDecorator(RecyclerView locationsRecycler) {
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
-        itemDecoration.setDrawable(getActivity().getResources().getDrawable(R.drawable.locations_separator));
-        locationsRecycler.addItemDecoration(itemDecoration);
-    }
-
-    private void loadFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+    private void loadFragment(Fragment fragment, String TAG){
+        FragmentTransaction fragmentTransaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, TAG);
         fragmentTransaction.addToBackStack("");
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
-        MainActivity.currentFragment = WEATHER_FRAGMENT;
     }
+
+
 }

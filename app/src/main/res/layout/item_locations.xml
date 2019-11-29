@@ -7,10 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/cardColor"
     android:orientation="horizontal"
-    app:cardCornerRadius="@dimen/card_corner"
-    app:cardElevation="5dp"
-    app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    app:cardCornerRadius="@dimen/card_corner">
 
     <LinearLayout
         android:layout_width="match_parent"

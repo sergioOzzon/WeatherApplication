@@ -2,7 +2,7 @@ package ru.sergioozzon.weatherapplication.fragments;
 
 import android.os.Bundle;
 import androidx.preference.PreferenceFragmentCompat;
-import com.example.weatherapplication.R;
+import ru.sergioozzon.weatherapplication.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat{
 

@@ -37,6 +37,6 @@
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/appBarLayout"
-        app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
+        app:srcCompat="@drawable/refresh" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

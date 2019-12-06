@@ -1,11 +1,8 @@
-package ru.sergioozzon.weatherapplication;
+package ru.sergioozzon.weatherapplication.modelWeather;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import java.util.ArrayList;
-import java.util.List;
-import ru.sergioozzon.weatherapplication.modelWeather.City;
 
 public class CitiesTable {
 
@@ -24,7 +21,7 @@ public class CitiesTable {
                 + " TEXT DEFAULT 'Default title'");
     }
 
-    public static void addCity(String cityName, SQLiteDatabase database) {
+    static void addCity(String cityName, SQLiteDatabase database) {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_CITY, cityName);
@@ -51,26 +48,20 @@ public class CitiesTable {
         //DELETE * FROM Notes
     }
 
-    public static List<City> getAllCities(SQLiteDatabase database) {
+    public static void loadAllCities(SQLiteDatabase database) {
         Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        return getResultFromCursor(cursor);
+        loadResultFromCursor(cursor);
     }
 
-    private static List<City> getResultFromCursor(Cursor cursor) {
-        ArrayList<City> result = null;
-        City city;
-
+    private static void loadResultFromCursor(Cursor cursor) {
         if(cursor != null && cursor.moveToFirst()) {//попали на первую запись, плюс вернулось true, если запись есть
-            result = new ArrayList<>(cursor.getCount());
-
-            String cityName = cursor.getColumnName(2);
             do {
-                city = new City(cityName);
-                result.add(city);
+                String cityName = cursor.getString(1);
+                new City(cityName);
             } while (cursor.moveToNext());
         }
-
-        try { cursor.close(); } catch (Exception ignored) {}
-        return result == null ? new ArrayList<City>(0) : result;
+        try {
+            assert cursor != null;
+            cursor.close(); } catch (Exception ignored) {}
     }
 }

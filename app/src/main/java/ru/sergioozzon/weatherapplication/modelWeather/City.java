@@ -1,12 +1,14 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import ru.sergioozzon.weatherapplication.MainActivity;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
 
 public class City implements Serializable {
@@ -14,22 +16,33 @@ public class City implements Serializable {
     private String cityName;
     private WeatherRequest weatherRequest;
     private static ArrayList<City> cityArrayList = new ArrayList<>();
+    private static Map<String, City> cities = new HashMap<>();
     private static City currentCity;
-    private static final String FILE_NAME = "current_city_file.city";
-    private static String path;
 
-    public City(String cityName){
+    City(String cityName) {
         this.cityName = cityName;
         weatherRequest = new WeatherRequest();
         weatherRequest.setName(cityName);
         cityArrayList.add(this);
+        cities.put(cityName, this);
+    }
+
+    public City(String cityName, SQLiteDatabase database) {
+        this.cityName = cityName;
+        weatherRequest = new WeatherRequest();
+        weatherRequest.setName(cityName);
+        cityArrayList.add(this);
+        cities.put(cityName, this);
+        CitiesTable.addCity(cityName, database);
     }
 
     public String getCityName() {
         return cityName;
     }
 
-    public WeatherRequest getWeatherRequest() { return weatherRequest; }
+    public WeatherRequest getWeatherRequest() {
+        return weatherRequest;
+    }
 
     void putWeatherRequest(WeatherRequest weatherRequest) {
         this.weatherRequest = weatherRequest;
@@ -40,64 +53,18 @@ public class City implements Serializable {
         return cityArrayList;
     }
 
-    public static void setCityArrayList(ArrayList<City> cityArrayList) {
-        City.cityArrayList = cityArrayList;
+    public static Map<String, City> getCities() {
+        return cities;
     }
 
     public static City getCurrentCity() {
-        try {
-            currentCity = readFromFile(path);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
         return currentCity;
     }
 
-    public static void setCurrentCity(City currentCity, String filesDirPath) {
+    public static void setCurrentCity(City currentCity, SharedPreferences preferences) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(MainActivity.PREFERENCE_CURRENT_CITY, currentCity.cityName);
+        editor.apply();
         City.currentCity = currentCity;
-        path = filesDirPath + "/" + FILE_NAME;
-        saveToFile(currentCity, path);
-    }
-
-    private static void saveToFile(City currentCity, String fileName) {
-        File file;
-        try {
-            file = new File(fileName);
-
-            FileOutputStream fileOutputStream;
-            ObjectOutputStream objectOutputStream;
-
-            if(!file.exists()) {
-                file.createNewFile();
-            }
-
-            fileOutputStream  = new FileOutputStream(file, false);
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(currentCity);
-
-            fileOutputStream.close();
-            objectOutputStream.close();
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        }
-    }
-
-    private static City readFromFile(String fileName) {
-        FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        City city = null;
-        try {
-            fileInputStream = new FileInputStream(fileName);
-            objectInputStream = new ObjectInputStream(fileInputStream);
-
-            city = (City) objectInputStream.readObject();
-
-            fileInputStream.close();
-            objectInputStream.close();
-        } catch(Exception exc) {
-            exc.printStackTrace();
-        }
-        return city;
     }
 }

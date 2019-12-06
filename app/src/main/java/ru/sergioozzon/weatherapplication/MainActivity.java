@@ -1,5 +1,6 @@
 package ru.sergioozzon.weatherapplication;
 
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -7,7 +8,9 @@ import ru.sergioozzon.weatherapplication.fragments.AboutAsFragment;
 import ru.sergioozzon.weatherapplication.fragments.LocationsFragment;
 import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
 import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
+import ru.sergioozzon.weatherapplication.modelWeather.CitiesTable;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.modelWeather.DatabaseHelper;
 import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,7 +33,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String DEFAULT_CITY = "Moscow";
     City city;
     SQLiteDatabase database;
+    SharedPreferences preferences;
+    public static final String APP_PREFERENCES = "mySettings";
+    public static final String PREFERENCE_CURRENT_CITY = "cityName";
     public final static String SETTING_FRAGMENT = "setting";
     public final static String WEATHER_FRAGMENT = "weather";
     public final static String LOCATION_FRAGMENT = "location";
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         initDB();
         initViews();
         initToolbar();
@@ -76,17 +82,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initCityList() {
-        ArrayList<City> cityList = new ArrayList<>(CitiesTable.getAllCities(database));
-        Log.d("CITY_LIST_OF_DB_SIZE", " " + cityList.size());
-        if (cityList.size() != 0) City.setCityArrayList(cityList);
-        Log.d("MAIN_CITY_LIST_SIZE", " " + City.getCityArrayList().size());
-        //TODO:Save city index of citylist to sharedPreference
-        city = City.getCurrentCity();
+        int CITIES_SIZE = City.getCities().size();
+        if (CITIES_SIZE == 0) {
+            CitiesTable.loadAllCities(database);
+            Log.d("MAIN_CITY_LIST_SIZE", " " + City.getCities().size());
+        }
+        if (preferences.contains(PREFERENCE_CURRENT_CITY)) {
+            Log.d("PREFERENCES", "preferences.contains(APP_PREFERENCES) = true");
+            city = City.getCities().get(preferences.getString(PREFERENCE_CURRENT_CITY, DEFAULT_CITY));
+        } else city = City.getCurrentCity();
         if (city == null) {
             //TODO: GET GEO
             //TODO: if GEO not avalible, then:
-            city = new City(DEFAULT_CITY);
-            City.setCurrentCity(city, getFilesDir().getPath());
+            Toast.makeText(getApplicationContext(), R.string.could_not_get_coordinates, Toast.LENGTH_SHORT).show();
+            city = new City(DEFAULT_CITY, database);
+            City.setCurrentCity(city, preferences);
         }
     }
 
@@ -127,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, fragment, TAG);
         ft.addToBackStack("");
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
 
@@ -174,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 loadFragment(new SettingsFragment(), SETTING_FRAGMENT);
         } else if (id == R.id.nav_location) {
             if (!isResumed(LOCATION_FRAGMENT))
-                loadFragment(new LocationsFragment(), LOCATION_FRAGMENT);
+                loadFragment(new LocationsFragment(preferences, database), LOCATION_FRAGMENT);
         } else if (id == R.id.nav_about_us) {
             if (!isResumed(ABOUT_AS_FRAGMENT))
                 loadFragment(new AboutAsFragment(), ABOUT_AS_FRAGMENT);
@@ -195,9 +204,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isResumed(String TAG) {
         try {
             boolean isResumed = Objects.requireNonNull(getSupportFragmentManager()
-                            .findFragmentByTag(TAG))
-                            .getLifecycle()
-                            .getCurrentState() == Lifecycle.State.RESUMED;
+                    .findFragmentByTag(TAG))
+                    .getLifecycle()
+                    .getCurrentState() == Lifecycle.State.RESUMED;
             Log.d("FRAGMENT_IS_RESUMED", TAG + " " + isResumed);
             return isResumed;
         } catch (NullPointerException e) {

@@ -3,7 +3,7 @@ package ru.sergioozzon.weatherapplication.modelWeather;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class OpenWeatherRepo {
+class OpenWeatherRepo {
     private static OpenWeatherRepo singleton = null;
     private IOpenWeather API;
 
@@ -11,14 +11,14 @@ public class OpenWeatherRepo {
         API = createAdapter();
     }
 
-    public static OpenWeatherRepo getSingleton() {
+    static OpenWeatherRepo getSingleton() {
         if(singleton == null) {
             singleton = new OpenWeatherRepo();
         }
         return singleton;
     }
 
-    public IOpenWeather getAPI() {
+    IOpenWeather getAPI() {
         return API;
     }
 

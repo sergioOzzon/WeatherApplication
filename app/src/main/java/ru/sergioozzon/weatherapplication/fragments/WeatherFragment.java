@@ -1,11 +1,11 @@
 package ru.sergioozzon.weatherapplication.fragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,8 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,19 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-
 import ru.sergioozzon.weatherapplication.R;
-
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-
-import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
@@ -72,7 +64,7 @@ public class WeatherFragment extends Fragment {
     public static WeatherFragment newInstance(City city) {
         WeatherFragment fragment = new WeatherFragment();
         Bundle args = new Bundle();
-        args.putSerializable(CURRENT_CITY, city);
+        args.putString(CURRENT_CITY, city.getCityName());
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,7 +75,7 @@ public class WeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (getArguments() != null) {
-            city = (City) getArguments().getSerializable(CURRENT_CITY);
+            city = City.getCities().get(getArguments().getString(CURRENT_CITY));
         }
     }
 
@@ -128,6 +120,12 @@ public class WeatherFragment extends Fragment {
             sensorManager.unregisterListener(setListenerSensor(sensorTemp), sensorTemp);
             sensorManager.unregisterListener(setListenerSensor(sensorHumid), sensorHumid);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 
     private SensorEventListener setListenerSensor(final Sensor sensor) {
@@ -193,7 +191,8 @@ public class WeatherFragment extends Fragment {
         sensorHumid = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
     }
 
-    class UpdateTask extends AsyncTask<City, Void, WeatherRequest> {
+    @SuppressLint("StaticFieldLeak")
+    private class UpdateTask extends AsyncTask<City, Void, WeatherRequest> {
 
         @Override
         protected void onPreExecute() {

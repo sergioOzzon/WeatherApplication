@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.Objects;
+
 import ru.sergioozzon.weatherapplication.MainActivity;
 import ru.sergioozzon.weatherapplication.R;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
@@ -22,9 +26,10 @@ public class AddCityFragment extends Fragment {
     private SharedPreferences preferences;
     private SQLiteDatabase database;
 
-    public AddCityFragment(){}
+    public AddCityFragment() {
+    }
 
-    AddCityFragment(SharedPreferences preferences, SQLiteDatabase database){
+    AddCityFragment(SharedPreferences preferences, SQLiteDatabase database) {
         this.preferences = preferences;
         this.database = database;
     }
@@ -39,18 +44,17 @@ public class AddCityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final TextInputEditText inputEditText = view.findViewById(R.id.nameNewCity);
-        Button okButton = view.findViewById(R.id.confirmCityNameButton);
-        final String[] cityName = new String[1];
-            final SharedPreferences.Editor editor = preferences.edit();
-                okButton.setOnClickListener(new View.OnClickListener() {
+        final Button okButton = view.findViewById(R.id.confirmCityNameButton);
+        final SharedPreferences.Editor editor = preferences.edit();
+        okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (inputEditText.getText() != null) {
-                    cityName[0] = String.valueOf(inputEditText.getText());
-                    City city = new City(cityName[0], database);
+                    final String cityName = String.valueOf(inputEditText.getText());
+                    City city = new City(cityName);
                     JsonDataLoader loader = new JsonDataLoader();
-                    loader.execute();
-                    editor.putString(MainActivity.PREFERENCE_CURRENT_CITY, cityName[0]);
+                    loader.execute(database);
+                    editor.putString(MainActivity.PREFERENCE_CURRENT_CITY, cityName);
                     editor.apply();
                     Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                             .beginTransaction()
@@ -59,8 +63,6 @@ public class AddCityFragment extends Fragment {
                 }
             }
         });
-
-
 
     }
 }

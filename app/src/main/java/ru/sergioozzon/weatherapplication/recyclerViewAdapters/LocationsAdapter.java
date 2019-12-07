@@ -7,13 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.Date;
 import java.util.Locale;
-import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.R;
+import ru.sergioozzon.weatherapplication.modelWeather.City;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.ViewHolder> {
 
@@ -104,7 +106,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         private TextView cityName;
         private ImageView weatherIcon;
 
-        ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull final View itemView) {
             super(itemView);
             CardView cardView = itemView.findViewById(R.id.LayoutOfCityInCitiesRecycler);
             currentTemp = itemView.findViewById(R.id.currentTempInCitiesRecycler);

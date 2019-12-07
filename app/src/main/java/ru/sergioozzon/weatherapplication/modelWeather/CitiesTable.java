@@ -39,7 +39,7 @@ public class CitiesTable {
         //UPDATE Notes set note = 10 WHERE note = 5
     }
 
-    public static void deleteCity(SQLiteDatabase database) {
+    public static void deleteCity(SQLiteDatabase database, City city) {
         database.delete(TABLE_NAME, COLUMN_CITY, null);
     }
 

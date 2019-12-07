@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String DEFAULT_CITY = "Moscow";
     City city;
-    SQLiteDatabase database;
+    public static SQLiteDatabase database;
     SharedPreferences preferences;
     public static final String APP_PREFERENCES = "mySettings";
     public static final String PREFERENCE_CURRENT_CITY = "cityName";
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void onClick(View view) {
             city = City.getCurrentCity();
             JsonDataLoader loader = new JsonDataLoader();
-            loader.execute();
+            loader.execute(database);
 
             if (isResumed(WEATHER_FRAGMENT))
                 loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadWeatherData() {
         JsonDataLoader loader = new JsonDataLoader();
-        loader.execute();
+        loader.execute(database);
     }
 
     private void initDB() {

@@ -19,7 +19,7 @@ public class City implements Serializable {
     private static Map<String, City> cities = new HashMap<>();
     private static City currentCity;
 
-    City(String cityName) {
+    public City(String cityName) {
         this.cityName = cityName;
         weatherRequest = new WeatherRequest();
         weatherRequest.setName(cityName);

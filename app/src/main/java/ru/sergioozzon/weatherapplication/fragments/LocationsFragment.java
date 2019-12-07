@@ -76,7 +76,7 @@ public class LocationsFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 currentCity = City.getCityArrayList().get(position);
                 City.setCurrentCity(currentCity, preferences);
-                loadFragment(WeatherFragment.newInstance(currentCity), MainActivity.WEATHER_FRAGMENT);
+                loadFragment(WeatherFragment.newInstance(currentCity, database), MainActivity.WEATHER_FRAGMENT);
             }
         });
     }

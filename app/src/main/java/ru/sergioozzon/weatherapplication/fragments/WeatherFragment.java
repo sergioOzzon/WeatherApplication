@@ -1,6 +1,8 @@
 package ru.sergioozzon.weatherapplication.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -21,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -28,16 +32,20 @@ import java.util.Objects;
 import ru.sergioozzon.weatherapplication.R;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.SENSOR_SERVICE;
 
 public class WeatherFragment extends Fragment {
 
+    static boolean isSensorsEnable = false;
     private static final String CURRENT_CITY = "currentCity";
     private City city;
+    private SQLiteDatabase database;
     private ScrollView scrollView;
     private LinearLayout sensorsLayout;
     private ProgressBar progressBar;
@@ -56,15 +64,15 @@ public class WeatherFragment extends Fragment {
     private SensorManager sensorManager;
     private Sensor sensorTemp;
     private Sensor sensorHumid;
-    private boolean isSensorsEnable = false;
 
-    public WeatherFragment() {
+    public WeatherFragment(SQLiteDatabase database) {
+        this.database = database;
     }
 
-    public static WeatherFragment newInstance(City city) {
-        WeatherFragment fragment = new WeatherFragment();
+    public static WeatherFragment newInstance(City city, SQLiteDatabase database) {
+        WeatherFragment fragment = new WeatherFragment(database);
         Bundle args = new Bundle();
-        args.putString(CURRENT_CITY, city.getCityName());
+        if (city != null) args.putString(CURRENT_CITY, city.getCityName());
         fragment.setArguments(args);
         return fragment;
     }
@@ -91,9 +99,19 @@ public class WeatherFragment extends Fragment {
         initViews(view);
         getWeatherData();
         createHourRecyclerView(view);
+        SharedPreferences settingFragmentPreferences = Objects
+                .requireNonNull(getActivity())
+                .getSharedPreferences("sensorsIsEnable", MODE_PRIVATE);
+        if (settingFragmentPreferences.contains("sensorsIsEnable"))
+            WeatherFragment.isSensorsEnable = settingFragmentPreferences
+                    .getBoolean("sensorsIsEnable", false);
         if (isSensorsEnable) {
-            sensorsLayout.setVisibility(View.VISIBLE);
-            getSensors();
+            try {
+                sensorsLayout.setVisibility(View.VISIBLE);
+                initSensors();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -106,10 +124,16 @@ public class WeatherFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (isSensorsEnable) {
-            sensorManager.registerListener(setListenerSensor(sensorTemp), sensorTemp,
-                    SensorManager.SENSOR_DELAY_NORMAL);
-            sensorManager.registerListener(setListenerSensor(sensorHumid), sensorHumid,
-                    SensorManager.SENSOR_DELAY_NORMAL);
+            try {
+                if (sensorTemp != null)
+                sensorManager.registerListener(setListenerSensor(sensorTemp), sensorTemp,
+                        SensorManager.SENSOR_DELAY_NORMAL);
+                if (sensorHumid != null)
+                sensorManager.registerListener(setListenerSensor(sensorHumid), sensorHumid,
+                        SensorManager.SENSOR_DELAY_NORMAL);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -117,8 +141,14 @@ public class WeatherFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if (isSensorsEnable) {
-            sensorManager.unregisterListener(setListenerSensor(sensorTemp), sensorTemp);
-            sensorManager.unregisterListener(setListenerSensor(sensorHumid), sensorHumid);
+            try {
+                if (sensorTemp != null)
+                    sensorManager.unregisterListener(setListenerSensor(sensorTemp), sensorTemp);
+                if (sensorHumid != null)
+                    sensorManager.unregisterListener(setListenerSensor(sensorHumid), sensorHumid);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -141,12 +171,12 @@ public class WeatherFragment extends Fragment {
         };
     }
 
-    private void showSensor(SensorEvent event, Sensor sensor) {
+    private void showSensor(SensorEvent event, Sensor sensor){
         StringBuilder stringBuilder = new StringBuilder();
-        if (sensor.getName().equals(sensorTemp.getName())) {
+        if ((sensorTemp != null) && sensor.getName().equals(sensorTemp.getName())) {
             stringBuilder.append("Temperature Sensor value = ").append(event.values[0]);
             tempSensorTextView.setText(stringBuilder);
-        } else if (sensor.getName().equals(sensorHumid.getName())) {
+        } else if ((sensorHumid != null) && sensor.getName().equals(sensorHumid.getName())) {
             stringBuilder.append("Humidity Sensor value = ").append(event.values[0]);
             humidSensorTextView.setText(stringBuilder);
         }
@@ -184,7 +214,7 @@ public class WeatherFragment extends Fragment {
         weatherRecycler.addItemDecoration(itemDecoration);
     }
 
-    private void getSensors() {
+    private void initSensors() {
         sensorManager = (SensorManager) Objects.requireNonNull(getActivity()).getSystemService(SENSOR_SERVICE);
         assert sensorManager != null;
         sensorTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
@@ -192,7 +222,7 @@ public class WeatherFragment extends Fragment {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class UpdateTask extends AsyncTask<City, Void, WeatherRequest> {
+    private class UpdateTask extends AsyncTask<City, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -202,14 +232,19 @@ public class WeatherFragment extends Fragment {
         }
 
         @Override
-        protected WeatherRequest doInBackground(final City... cities) {
-            return cities[0].getWeatherRequest();
+        protected Void doInBackground(final City... cities) {
+            try {
+                JsonDataLoader.update(cities[0], database);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(WeatherRequest weatherRequest) {
-            super.onPostExecute(weatherRequest);
-            if (weatherRequest != null) {
+        protected void onPostExecute(Void voids) {
+            super.onPostExecute(voids);
+            if (city.getWeatherRequest().getMain() != null) {
                 DateFormat dateFormat = DateFormat.getDateInstance();
                 DateFormat timeFormat = DateFormat.getTimeInstance();
                 cityNameTextView.setText(String.valueOf(city.getCityName()));
@@ -232,6 +267,7 @@ public class WeatherFragment extends Fragment {
                 layout.addView(errorTextView);
                 errorTextView.setText("Ошибка");
                 progressBar.setVisibility(View.INVISIBLE);
+
             }
 
         }

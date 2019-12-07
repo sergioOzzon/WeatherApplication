@@ -57,11 +57,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onClick(View view) {
             city = City.getCurrentCity();
+            if (city == null){
+                city = City.getCities().get(DEFAULT_CITY);
+            }
             JsonDataLoader loader = new JsonDataLoader();
             loader.execute(database);
-
             if (isResumed(WEATHER_FRAGMENT))
-                loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
+                loadFragment(WeatherFragment.newInstance(city, database), WEATHER_FRAGMENT);
             Toast.makeText(getApplicationContext(), (R.string.has_been_updated), Toast.LENGTH_SHORT).show();
         }
     };
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initSideMenu();
         initCityList();
         loadWeatherData();
-        loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
+        loadFragment(WeatherFragment.newInstance(city, database), WEATHER_FRAGMENT);
     }
 
     private void initCityList() {
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 loadFragment(new AboutAsFragment(), ABOUT_AS_FRAGMENT);
         } else if (id == R.id.nav_home) {
             if (!isResumed(WEATHER_FRAGMENT))
-                loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
+                loadFragment(WeatherFragment.newInstance(city, database), WEATHER_FRAGMENT);
         } else if (id == R.id.nav_share) {
             //TODO
             Snackbar.make(drawer, "Coming soon", Snackbar.LENGTH_SHORT).show();

@@ -58,7 +58,7 @@ public class AddCityFragment extends Fragment {
                     editor.apply();
                     Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.fragment_container, WeatherFragment.newInstance(city), MainActivity.WEATHER_FRAGMENT)
+                            .replace(R.id.fragment_container, WeatherFragment.newInstance(city, database), MainActivity.WEATHER_FRAGMENT)
                             .commit();
                 }
             }

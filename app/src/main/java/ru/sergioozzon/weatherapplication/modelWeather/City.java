@@ -1,7 +1,6 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,15 +24,6 @@ public class City implements Serializable {
         weatherRequest.setName(cityName);
         cityArrayList.add(this);
         cities.put(cityName, this);
-    }
-
-    public City(String cityName, SQLiteDatabase database) {
-        this.cityName = cityName;
-        weatherRequest = new WeatherRequest();
-        weatherRequest.setName(cityName);
-        cityArrayList.add(this);
-        cities.put(cityName, this);
-        CitiesTable.addCity(cityName, database);
     }
 
     public String getCityName() {

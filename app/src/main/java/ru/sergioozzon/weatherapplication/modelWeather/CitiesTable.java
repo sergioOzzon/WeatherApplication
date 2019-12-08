@@ -21,7 +21,7 @@ public class CitiesTable {
                 + " TEXT DEFAULT 'Default title'");
     }
 
-    static void addCity(String cityName, SQLiteDatabase database) {
+    public static void addCity(String cityName, SQLiteDatabase database) {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_CITY, cityName);

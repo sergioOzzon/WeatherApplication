@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import ru.sergioozzon.weatherapplication.MainActivity;
 import ru.sergioozzon.weatherapplication.R;
+import ru.sergioozzon.weatherapplication.modelWeather.CitiesTable;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
 
@@ -54,6 +55,7 @@ public class AddCityFragment extends Fragment {
                     City city = new City(cityName);
                     JsonDataLoader loader = new JsonDataLoader();
                     loader.execute(database);
+                    CitiesTable.addCity(cityName, database);
                     editor.putString(MainActivity.PREFERENCE_CURRENT_CITY, cityName);
                     editor.apply();
                     Objects.requireNonNull(getActivity()).getSupportFragmentManager()

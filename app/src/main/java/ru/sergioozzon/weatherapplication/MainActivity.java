@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //TODO: GET GEO
             //TODO: if GEO not avalible, then:
             Toast.makeText(getApplicationContext(), R.string.could_not_get_coordinates, Toast.LENGTH_SHORT).show();
-            city = new City(DEFAULT_CITY, database);
+            city = new City(DEFAULT_CITY);
+            CitiesTable.addCity(city.getCityName(), database);
             City.setCurrentCity(city, preferences);
         }
     }

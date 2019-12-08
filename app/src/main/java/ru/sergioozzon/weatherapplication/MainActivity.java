@@ -86,31 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
     }
 
-    private void initCityList() {
-        int CITIES_SIZE = City.getCities().size();
-        if (CITIES_SIZE == 0) {
-            CitiesTable.loadAllCities(database);
-            Log.d("MAIN_CITY_LIST_SIZE", " " + City.getCities().size());
-        }
-        if (preferences.contains(PREFERENCE_CURRENT_CITY)) {
-            Log.d("PREFERENCES", "preferences.contains(APP_PREFERENCES) = true");
-            city = City.getCities().get(preferences.getString(PREFERENCE_CURRENT_CITY, DEFAULT_CITY));
-        } else city = City.getCurrentCity();
-        if (city == null) {
-            //TODO: GET GEO
-            //TODO: if GEO not avalible, then:
-            Toast.makeText(getApplicationContext(), R.string.could_not_get_coordinates, Toast.LENGTH_SHORT).show();
-            city = new City(DEFAULT_CITY);
-            CitiesTable.addCity(city.getCityName(), database);
-            City.setCurrentCity(city, preferences);
-        }
-    }
-
-    private void loadWeatherData() {
-        JsonDataLoader loader = new JsonDataLoader();
-        loader.execute(database);
-    }
-
     private void initDB() {
         database = new DatabaseHelper(getApplicationContext()).getWritableDatabase();
     }
@@ -137,6 +112,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initCityList() {
+        int CITIES_SIZE = City.getCities().size();
+        if (CITIES_SIZE == 0) {
+            CitiesTable.loadAllCities(database);
+            Log.d("MAIN_CITY_LIST_SIZE", " " + City.getCities().size());
+        }
+        if (preferences.contains(PREFERENCE_CURRENT_CITY)) {
+            Log.d("PREFERENCES", "preferences.contains(APP_PREFERENCES) = true");
+            city = City.getCities().get(preferences.getString(PREFERENCE_CURRENT_CITY, DEFAULT_CITY));
+        } else city = City.getCurrentCity();
+        if (city == null) {
+            //TODO: GET GEO
+            //TODO: if GEO not avalible, then:
+            Toast.makeText(getApplicationContext(), R.string.could_not_get_coordinates, Toast.LENGTH_SHORT).show();
+            city = new City(DEFAULT_CITY);
+            CitiesTable.addCity(city.getCityName(), database);
+            City.setCurrentCity(city, preferences);
+        }
+    }
+
+    private void loadWeatherData() {
+        JsonDataLoader loader = new JsonDataLoader();
+        loader.execute(database);
     }
 
     private void loadFragment(Fragment fragment, String TAG) {

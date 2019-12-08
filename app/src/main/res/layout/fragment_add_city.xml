@@ -8,6 +8,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset"
+        android:layout_marginEnd="@dimen/offset"
+        android:layout_marginTop="@dimen/offset"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -21,10 +24,8 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="@dimen/offset"
+            android:layout_marginBottom="@dimen/offset"
             android:text="@string/ok"
             app:cornerRadius="@dimen/card_corner"
             android:textAlignment="center" />

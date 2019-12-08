@@ -35,13 +35,13 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     public void onBindViewHolder(@NonNull LocationsAdapter.ViewHolder holder, int position) {
         Resources res = holder.itemView.getContext().getResources();
 
-        boolean isData = City.getCityArrayList().get(position).getWeatherRequest().getMain() != null;
+        boolean isData = City.getCityArrayList().get(position).getCurrentWeatherRequest().getMain() != null;
         if (isData) {
             holder.getCityName().setText(String.valueOf(City.getCityArrayList().get(position).getCityName()));
-            holder.getCurrentTemp().setText(String.format(Locale.getDefault(), "%.0f °C", City.getCityArrayList().get(position).getWeatherRequest().getMain().getTemp()));
-            holder.getWeatherIcon().setImageDrawable(setWeatherIcon(City.getCityArrayList().get(position).getWeatherRequest().getWeather()[0].getId(),
-                    City.getCityArrayList().get(position).getWeatherRequest().getSys().getSunrise() * 1000,
-                    City.getCityArrayList().get(position).getWeatherRequest().getSys().getSunset() * 1000, res));
+            holder.getCurrentTemp().setText(String.format(Locale.getDefault(), "%.0f °C", City.getCityArrayList().get(position).getCurrentWeatherRequest().getMain().getTemp()));
+            holder.getWeatherIcon().setImageDrawable(setWeatherIcon(City.getCityArrayList().get(position).getCurrentWeatherRequest().getWeather()[0].getId(),
+                    City.getCityArrayList().get(position).getCurrentWeatherRequest().getSys().getSunrise() * 1000,
+                    City.getCityArrayList().get(position).getCurrentWeatherRequest().getSys().getSunset() * 1000, res));
         }
     }
 

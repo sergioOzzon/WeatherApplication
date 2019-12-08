@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class WeatherRequest implements Serializable {
+public class CurrentWeatherRequest implements Serializable {
+
     @SerializedName("coord") private Coord coordinates;
     @SerializedName("weather") private Weather[] weather;
     @SerializedName("base") private String base;
@@ -19,6 +20,7 @@ public class WeatherRequest implements Serializable {
     @SerializedName("timezone") private int timezone;
     @SerializedName("name") private String name;
     @SerializedName("cod") private int cod;
+    @SerializedName("dt_txt")private String dt_txt;
     private Calendar calendar;
 
     public Coord getCoordinates() {
@@ -123,6 +125,10 @@ public class WeatherRequest implements Serializable {
 
     public void setCod(int cod) {
         this.cod = cod;
+    }
+
+    public String getDt_txt() {
+        return dt_txt;
     }
 
     public void setUpdateDate() {

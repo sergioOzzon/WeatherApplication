@@ -183,7 +183,7 @@ public class WeatherFragment extends Fragment {
     }
 
     private void createHourRecyclerView(@NonNull View view) {
-        WeatherAdapter adapter = new WeatherAdapter();
+        WeatherAdapter adapter = new WeatherAdapter(city);
         RecyclerView hourWeatherRecycler = view.findViewById(R.id.weatherRecyclerView);
         hourWeatherRecycler.setHasFixedSize(true);
         setDecorator(hourWeatherRecycler);
@@ -244,21 +244,21 @@ public class WeatherFragment extends Fragment {
         @Override
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
-            if (city != null && city.getWeatherRequest().getMain() != null) {
+            if (city != null && city.getCurrentWeatherRequest() != null && city.getForecastWeatherRequest() != null) {
                 DateFormat dateFormat = DateFormat.getDateInstance();
                 DateFormat timeFormat = DateFormat.getTimeInstance();
                 cityNameTextView.setText(String.valueOf(city.getCityName()));
-                currentDateTextView.setText(dateFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
-                updateTime.setText(timeFormat.format(city.getWeatherRequest().getUpdateDate().getTime()));
-                cityTempTextView.setText(String.format(Locale.getDefault(), "%.0f °C", city.getWeatherRequest().getMain().getTemp()));
-                descriptionTextView.setText(String.valueOf(city.getWeatherRequest().getWeather()[0].getDescription()));
-                tempOnDayTextView.setText(String.format(Locale.getDefault(), "%.0f °C/%.0f °C", city.getWeatherRequest().getMain().getTempMin(), city.getWeatherRequest().getMain().getTempMax()));
-                humidityTextView.setText(String.format(Locale.getDefault(), "%.0f %%", city.getWeatherRequest().getMain().getHumidity()));
-                windTextView.setText(String.format(Locale.getDefault(), "%s %s", city.getWeatherRequest().getWind().getSpeed(), getString(R.string.metersPerSecond)));
-                pressureTextView.setText(String.format(Locale.getDefault(), "%.0f %s", city.getWeatherRequest().getMain().getPressure(), getString(R.string.mmHgPost)));
-                setWeatherIcon(city.getWeatherRequest().getWeather()[0].getId(),
-                        city.getWeatherRequest().getSys().getSunrise() * 1000,
-                        city.getWeatherRequest().getSys().getSunset() * 1000);
+                currentDateTextView.setText(dateFormat.format(city.getCurrentWeatherRequest().getUpdateDate().getTime()));
+                updateTime.setText(timeFormat.format(city.getCurrentWeatherRequest().getUpdateDate().getTime()));
+                cityTempTextView.setText(String.format(Locale.getDefault(), "%.0f °C", city.getCurrentWeatherRequest().getMain().getTemp()));
+                descriptionTextView.setText(String.valueOf(city.getCurrentWeatherRequest().getWeather()[0].getDescription()));
+                tempOnDayTextView.setText(String.format(Locale.getDefault(), "%.0f °C/%.0f °C", city.getForecastWeatherRequest().getWeatherForecasts().get(0).getMain().getTemp(), city.getCurrentWeatherRequest().getMain().getTempMax()));
+                humidityTextView.setText(String.format(Locale.getDefault(), "%.0f %%", city.getCurrentWeatherRequest().getMain().getHumidity()));
+                windTextView.setText(String.format(Locale.getDefault(), "%s %s", city.getCurrentWeatherRequest().getWind().getSpeed(), getString(R.string.metersPerSecond)));
+                pressureTextView.setText(String.format(Locale.getDefault(), "%.0f %s", city.getCurrentWeatherRequest().getMain().getPressure(), getString(R.string.mmHgPost)));
+                setWeatherIcon(city.getCurrentWeatherRequest().getWeather()[0].getId(),
+                        city.getCurrentWeatherRequest().getSys().getSunrise() * 1000,
+                        city.getCurrentWeatherRequest().getSys().getSunset() * 1000);
                 progressBar.setVisibility(View.INVISIBLE);
                 scrollView.setVisibility(View.VISIBLE);
             } else {
@@ -267,11 +267,8 @@ public class WeatherFragment extends Fragment {
                 layout.addView(errorTextView);
                 errorTextView.setText("Ошибка");
                 progressBar.setVisibility(View.INVISIBLE);
-
             }
-
         }
-
     }
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset) {

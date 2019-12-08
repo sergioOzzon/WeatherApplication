@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 import retrofit2.Response;
-import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.CurrentWeatherRequest;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.ForecastWeatherRequest;
 
 public class JsonDataLoader extends AsyncTask<SQLiteDatabase, Void, Void> {
 
@@ -17,13 +18,26 @@ public class JsonDataLoader extends AsyncTask<SQLiteDatabase, Void, Void> {
     private static final String REGION = "RU";
 
     public static void update(final City city, SQLiteDatabase database) throws IOException {
+        //TODO: refactoring
         if (city != null) {
-            Response response = OpenWeatherRepo.getSingleton().getAPI().loadWeather(city.getCityName() + "," + REGION,
+            Response response1 = OpenWeatherRepo.getSingleton().getAPI().loadForecastWeather(city.getCityName() + "," + REGION,
                     KEY_API, UNITS)
                     .execute();
-            Log.d("RESPONSE_RESULT", response.toString());
-            if (response.code() >= 200 && response.code() < 300) {
-                city.putWeatherRequest((WeatherRequest) Objects.requireNonNull(response.body()));
+            Log.d("RESPONSE_RESULT", response1.toString());
+            if (response1.code() >= 200 && response1.code() < 300) {
+                city.putForecastWeatherRequest((ForecastWeatherRequest) Objects.requireNonNull(response1.body()));
+            } else {
+                CitiesTable.deleteCity(database, city);
+                City.getCities().remove(city.getCityName());
+                City.getCityArrayList().remove(city);
+            }
+
+            Response response2 = OpenWeatherRepo.getSingleton().getAPI().loadCurrentWeather(city.getCityName() + "," + REGION,
+                    KEY_API, UNITS)
+                    .execute();
+            Log.d("RESPONSE_RESULT", response2.toString());
+            if (response2.code() >= 200 && response2.code() < 300) {
+                city.putWeatherRequest((CurrentWeatherRequest) Objects.requireNonNull(response2.body()));
             } else {
                 CitiesTable.deleteCity(database, city);
                 City.getCities().remove(city.getCityName());
@@ -34,8 +48,7 @@ public class JsonDataLoader extends AsyncTask<SQLiteDatabase, Void, Void> {
 
     @Override
     protected Void doInBackground(SQLiteDatabase... databases) {
-        int SIZE = City.getCityArrayList().size();
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < City.getCityArrayList().size(); i++) {
             try {
                 update(City.getCityArrayList().get(i), databases[0]);
             } catch (IOException e) {

@@ -8,20 +8,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ru.sergioozzon.weatherapplication.MainActivity;
-import ru.sergioozzon.weatherapplication.modelWeather.entities.WeatherRequest;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.CurrentWeatherRequest;
+import ru.sergioozzon.weatherapplication.modelWeather.entities.ForecastWeatherRequest;
 
 public class City implements Serializable {
 
     private String cityName;
-    private WeatherRequest weatherRequest;
+    private CurrentWeatherRequest currentWeatherRequest;
+    private ForecastWeatherRequest forecastWeatherRequest;
     private static ArrayList<City> cityArrayList = new ArrayList<>();
     private static Map<String, City> cities = new HashMap<>();
     private static City currentCity;
 
     public City(String cityName) {
         this.cityName = cityName;
-        weatherRequest = new WeatherRequest();
-        weatherRequest.setName(cityName);
+        currentWeatherRequest = new CurrentWeatherRequest();
+        forecastWeatherRequest = new ForecastWeatherRequest();
+        currentWeatherRequest.setName(cityName);
         cityArrayList.add(this);
         cities.put(cityName, this);
     }
@@ -30,13 +33,21 @@ public class City implements Serializable {
         return cityName;
     }
 
-    public WeatherRequest getWeatherRequest() {
-        return weatherRequest;
+    public CurrentWeatherRequest getCurrentWeatherRequest() {
+        return currentWeatherRequest;
     }
 
-    void putWeatherRequest(WeatherRequest weatherRequest) {
-        this.weatherRequest = weatherRequest;
-        weatherRequest.setUpdateDate();
+    void putWeatherRequest(CurrentWeatherRequest currentWeatherRequest) {
+        this.currentWeatherRequest = currentWeatherRequest;
+        currentWeatherRequest.setUpdateDate();
+    }
+
+    public ForecastWeatherRequest getForecastWeatherRequest() {
+        return forecastWeatherRequest;
+    }
+
+    public void putForecastWeatherRequest(ForecastWeatherRequest forecastWeatherRequest) {
+        this.forecastWeatherRequest = forecastWeatherRequest;
     }
 
     public static ArrayList<City> getCityArrayList() {

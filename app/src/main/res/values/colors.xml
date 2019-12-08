@@ -7,4 +7,5 @@
     <color name="startColorGradient">#81D4FA</color>
     <color name="cardBackground">#85C2F8</color>
     <color name="cardColor">#FFFFFF</color>
+    <color name="separatorColor">#00FFFFFF</color>
 </resources>

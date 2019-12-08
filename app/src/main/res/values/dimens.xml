@@ -6,4 +6,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="card_corner">16dp</dimen>
     <dimen name="offset">8dp</dimen>
+    <dimen name="separator_dimen">10dp</dimen>
 </resources>

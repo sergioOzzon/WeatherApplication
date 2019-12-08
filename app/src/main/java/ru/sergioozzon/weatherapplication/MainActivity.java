@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public final static String LOCATION_FRAGMENT = "location";
     public final static String ABOUT_AS_FRAGMENT = "about as";
     public final static String ADD_CITY_FRAGMENT = "add city";
-    private static final String CURRENT_CITY = "current city";
     private Toolbar toolbar;
     private DrawerLayout drawer;
     FloatingActionButton fab;
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onClick(View view) {
             city = City.getCurrentCity();
-            if (city == null){
+            if (city == null) {
                 city = City.getCities().get(DEFAULT_CITY);
             }
             JsonDataLoader loader = new JsonDataLoader();
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        initPreferences();
         initDB();
         initViews();
         initToolbar();
@@ -81,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initCityList();
         loadWeatherData();
         loadFragment(WeatherFragment.newInstance(city, database), WEATHER_FRAGMENT);
+    }
+
+    private void initPreferences() {
+        preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
     }
 
     private void initCityList() {
@@ -146,21 +149,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        city = (City) savedInstanceState.getSerializable(CURRENT_CITY);
+        city = City.getCurrentCity();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Bundle args = new Bundle();
-        args.putSerializable(CURRENT_CITY, city);
-        onSaveInstanceState(args);
     }
 
     @Override

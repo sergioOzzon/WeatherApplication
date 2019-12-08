@@ -244,7 +244,7 @@ public class WeatherFragment extends Fragment {
         @Override
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
-            if (city.getWeatherRequest().getMain() != null) {
+            if (city != null && city.getWeatherRequest().getMain() != null) {
                 DateFormat dateFormat = DateFormat.getDateInstance();
                 DateFormat timeFormat = DateFormat.getTimeInstance();
                 cityNameTextView.setText(String.valueOf(city.getCityName()));

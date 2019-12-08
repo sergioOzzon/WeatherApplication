@@ -29,7 +29,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="8dp" />
+                    android:layout_height="@dimen/offset" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     app:cardCornerRadius="@dimen/card_corner"
                     app:cardPreventCornerOverlap="true"
                     app:cardUseCompatPadding="true"
-                    app:contentPadding="@dimen/card_corner">
+                    app:contentPadding="@dimen/offset">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                             android:id="@+id/iconWeather"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="@dimen/offset"
                             android:layout_weight="1"
                             android:contentDescription="@string/icon_of_weather"
                             android:gravity="center"
@@ -76,7 +76,7 @@
 
                             <Space
                                 android:layout_width="match_parent"
-                                android:layout_height="15dp" />
+                                android:layout_height="@dimen/offset" />
 
                             <TextView
                                 android:id="@+id/currentDate"
@@ -87,7 +87,7 @@
 
                             <Space
                                 android:layout_width="match_parent"
-                                android:layout_height="10dp" />
+                                android:layout_height="@dimen/offset" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                                     android:id="@+id/updateTime"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_marginStart="4dp"
+                                    android:layout_marginStart="@dimen/offset"
                                     android:layout_weight="1"
                                     android:gravity="center|start"
                                     android:text="@string/update_time"
@@ -123,7 +123,7 @@
                     app:cardCornerRadius="@dimen/card_corner"
                     app:cardPreventCornerOverlap="true"
                     app:cardUseCompatPadding="true"
-                    app:contentPadding="@dimen/card_corner">
+                    app:contentPadding="@dimen/offset">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                 app:cardCornerRadius="@dimen/card_corner"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true"
-                app:contentPadding="@dimen/card_corner">
+                app:contentPadding="@dimen/offset">
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.sergioozzon.weatherapplication.MainActivity;
+import ru.sergioozzon.weatherapplication.ui.MainActivity;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.CurrentWeatherRequest;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.ForecastWeatherRequest;
 

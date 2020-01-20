@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ru.sergioozzon.weatherapplication.MainActivity"
+    tools:context="ru.sergioozzon.weatherapplication.ui.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <FrameLayout

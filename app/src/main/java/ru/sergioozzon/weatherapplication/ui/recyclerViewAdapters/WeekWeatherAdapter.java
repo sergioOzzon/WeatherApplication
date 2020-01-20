@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication.recyclerViewAdapters;
+package ru.sergioozzon.weatherapplication.ui.recyclerViewAdapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import ru.sergioozzon.weatherapplication.R;
 import ru.sergioozzon.weatherapplication.modelWeather.City;

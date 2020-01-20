@@ -1,16 +1,16 @@
-package ru.sergioozzon.weatherapplication.fragments;
+package ru.sergioozzon.weatherapplication.ui.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-import ru.sergioozzon.weatherapplication.MainActivity;
+import ru.sergioozzon.weatherapplication.ui.MainActivity;
 import ru.sergioozzon.weatherapplication.R;
 import ru.sergioozzon.weatherapplication.modelWeather.CitiesTable;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
@@ -55,6 +55,7 @@ public class AddCityFragment extends Fragment {
         }
     };
 
+
     public AddCityFragment() {
     }
 
@@ -69,6 +70,13 @@ public class AddCityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_city, container, false);
         inputEditText = view.findViewById(R.id.nameNewCity);
         okButton = view.findViewById(R.id.confirmCityNameButton);
+        inputEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                okBtmClickListener.onClick(v);
+                return false;
+            }
+        });
         inputEditText.requestFocus();
         if (getActivity() != null) {
             inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -5,7 +5,7 @@
     android:id="@+id/WeatherLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.sergioozzon.weatherapplication.fragments.WeatherFragment">
+    tools:context=".ui.fragments.WeatherFragment">
 
     <ScrollView
         android:id="@+id/scrollView"

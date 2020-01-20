@@ -1,13 +1,14 @@
-package ru.sergioozzon.weatherapplication;
+package ru.sergioozzon.weatherapplication.ui;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import ru.sergioozzon.weatherapplication.fragments.AboutAsFragment;
-import ru.sergioozzon.weatherapplication.fragments.LocationsFragment;
-import ru.sergioozzon.weatherapplication.fragments.SettingsFragment;
-import ru.sergioozzon.weatherapplication.fragments.WeatherFragment;
+import ru.sergioozzon.weatherapplication.R;
+import ru.sergioozzon.weatherapplication.ui.fragments.AboutAsFragment;
+import ru.sergioozzon.weatherapplication.ui.fragments.LocationsFragment;
+import ru.sergioozzon.weatherapplication.ui.fragments.SettingsFragment;
+import ru.sergioozzon.weatherapplication.ui.fragments.WeatherFragment;
 import ru.sergioozzon.weatherapplication.modelWeather.CitiesTable;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 import ru.sergioozzon.weatherapplication.modelWeather.DatabaseHelper;

@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication.recyclerViewAdapters;
+package ru.sergioozzon.weatherapplication.ui.recyclerViewAdapters;
 
 import android.app.Dialog;
 import android.content.res.Resources;

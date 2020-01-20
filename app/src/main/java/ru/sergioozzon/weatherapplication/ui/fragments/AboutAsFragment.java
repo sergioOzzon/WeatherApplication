@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication.fragments;
+package ru.sergioozzon.weatherapplication.ui.fragments;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;

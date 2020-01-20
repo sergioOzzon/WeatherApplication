@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication.fragments;
+package ru.sergioozzon.weatherapplication.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -34,7 +34,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
 import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
-import ru.sergioozzon.weatherapplication.recyclerViewAdapters.HourWeatherAdapter;
+import ru.sergioozzon.weatherapplication.ui.recyclerViewAdapters.HourWeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 
 import static android.content.Context.MODE_PRIVATE;

@@ -1,4 +1,4 @@
-package ru.sergioozzon.weatherapplication.fragments;
+package ru.sergioozzon.weatherapplication.ui.fragments;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,8 +17,8 @@ import android.widget.Button;
 
 import java.util.Objects;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.recyclerViewAdapters.LocationsAdapter;
-import ru.sergioozzon.weatherapplication.MainActivity;
+import ru.sergioozzon.weatherapplication.ui.recyclerViewAdapters.LocationsAdapter;
+import ru.sergioozzon.weatherapplication.ui.MainActivity;
 import ru.sergioozzon.weatherapplication.R;
 
 public class LocationsFragment extends Fragment {

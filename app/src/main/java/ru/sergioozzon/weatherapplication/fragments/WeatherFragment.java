@@ -34,7 +34,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
 import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
-import ru.sergioozzon.weatherapplication.recyclerViewAdapters.WeatherAdapter;
+import ru.sergioozzon.weatherapplication.recyclerViewAdapters.HourWeatherAdapter;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -64,6 +64,7 @@ public class WeatherFragment extends Fragment {
     private SensorManager sensorManager;
     private Sensor sensorTemp;
     private Sensor sensorHumid;
+    RecyclerView hourWeatherRecycler;
 
     public WeatherFragment(SQLiteDatabase database) {
         this.database = database;
@@ -98,7 +99,6 @@ public class WeatherFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         getWeatherData();
-        createHourRecyclerView(view);
         SharedPreferences settingFragmentPreferences = Objects
                 .requireNonNull(getActivity())
                 .getSharedPreferences("sensorsIsEnable", MODE_PRIVATE);
@@ -182,9 +182,8 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    private void createHourRecyclerView(@NonNull View view) {
-        WeatherAdapter adapter = new WeatherAdapter(city);
-        RecyclerView hourWeatherRecycler = view.findViewById(R.id.weatherRecyclerView);
+    private void createHourRecyclerView() {
+        HourWeatherAdapter adapter = new HourWeatherAdapter(city);
         hourWeatherRecycler.setHasFixedSize(true);
         setDecorator(hourWeatherRecycler);
         hourWeatherRecycler.setAdapter(adapter);
@@ -206,6 +205,7 @@ public class WeatherFragment extends Fragment {
         humidityTextView = view.findViewById(R.id.humidity_weather);
         windTextView = view.findViewById(R.id.wind_weather);
         pressureTextView = view.findViewById(R.id.pressure_weather);
+        hourWeatherRecycler = view.findViewById(R.id.weatherRecyclerView);
     }
 
     private void setDecorator(RecyclerView weatherRecycler) {
@@ -247,7 +247,7 @@ public class WeatherFragment extends Fragment {
             if (city != null && city.getCurrentWeatherRequest().getMain() != null && city.getForecastWeatherRequest().getWeatherForecasts() != null) {
                 DateFormat dateFormat = DateFormat.getDateInstance();
                 DateFormat timeFormat = DateFormat.getTimeInstance();
-                cityNameTextView.setText(String.valueOf(city.getCityName()));
+                cityNameTextView.setText(String.valueOf(city.getCurrentWeatherRequest().getName()));
                 currentDateTextView.setText(dateFormat.format(city.getCurrentWeatherRequest().getUpdateDate().getTime()));
                 updateTime.setText(timeFormat.format(city.getCurrentWeatherRequest().getUpdateDate().getTime()));
                 cityTempTextView.setText(String.format(Locale.getDefault(), "%.0f °C", city.getCurrentWeatherRequest().getMain().getTemp()));
@@ -259,6 +259,7 @@ public class WeatherFragment extends Fragment {
                 setWeatherIcon(city.getCurrentWeatherRequest().getWeather()[0].getId(),
                         city.getCurrentWeatherRequest().getSys().getSunrise() * 1000,
                         city.getCurrentWeatherRequest().getSys().getSunset() * 1000);
+                createHourRecyclerView();
                 progressBar.setVisibility(View.INVISIBLE);
                 scrollView.setVisibility(View.VISIBLE);
             } else {

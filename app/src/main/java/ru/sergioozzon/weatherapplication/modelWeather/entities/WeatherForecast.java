@@ -3,8 +3,11 @@ package ru.sergioozzon.weatherapplication.modelWeather.entities;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class WeatherForecast implements Serializable {
 
@@ -43,8 +46,19 @@ public class WeatherForecast implements Serializable {
         return this.dt_txt;
     }
     public String getTime(){
+        /**
+         * @param dt_txt = 2020-01-20 21:00:00 (for example)
+         * @param timeBuilder = 20.01\n
+         *                      21:00
+         */
         String time = dt_txt.substring(11, 16);
-        return time;
+        StringBuilder timeBuilder = new StringBuilder();
+
+        String date = dt_txt.substring(8, 10);
+        String month = dt_txt.substring(5, 7);
+        timeBuilder.append(String.format("%s.%s%n", date, month));
+        timeBuilder.append(time);
+        return timeBuilder.toString();
     }
     public void setUpdateDate() {
         this.calendar = new GregorianCalendar();

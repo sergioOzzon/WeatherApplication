@@ -1,5 +1,7 @@
 package ru.sergioozzon.weatherapplication.modelWeather.entities;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -137,5 +139,10 @@ public class CurrentWeatherRequest implements Serializable {
 
     public Calendar getUpdateDate() {
         return calendar;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return super.equals(obj);
     }
 }

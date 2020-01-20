@@ -74,4 +74,5 @@
     <string name="name_of_the_city">name of the city</string>
     <string name="ok">OK</string>
     <string name="could_not_get_coordinates">Could not get coordinates</string>
+    <string name="icon_in_week_weather_item">icon in week weather item</string>
 </resources>

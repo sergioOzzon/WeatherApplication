@@ -2,6 +2,8 @@ package ru.sergioozzon.weatherapplication.modelWeather;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,5 +69,22 @@ public class City implements Serializable {
         editor.putString(MainActivity.PREFERENCE_CURRENT_CITY, currentCity.cityName);
         editor.apply();
         City.currentCity = currentCity;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        City guest = (City) obj;
+        return cityName.equals(guest.cityName)
+                && (currentWeatherRequest == guest.currentWeatherRequest
+                || (currentWeatherRequest != null && currentWeatherRequest.equals(guest.getCurrentWeatherRequest())))
+                && (forecastWeatherRequest == guest.forecastWeatherRequest
+                || (forecastWeatherRequest != null && forecastWeatherRequest .equals(guest.getForecastWeatherRequest())
+        ));
     }
 }

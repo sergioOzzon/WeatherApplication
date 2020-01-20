@@ -11,7 +11,8 @@
         android:layout_height="30dp"
         android:layout_weight="8"
         android:gravity="center"
-        app:srcCompat="@drawable/cloud" />
+        app:srcCompat="@drawable/cloud"
+        android:contentDescription="@string/icon_in_week_weather_item" />
 
     <TextView
         android:id="@+id/day_week_weather"

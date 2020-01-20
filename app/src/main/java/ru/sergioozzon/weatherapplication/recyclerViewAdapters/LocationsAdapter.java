@@ -1,5 +1,6 @@
 package ru.sergioozzon.weatherapplication.recyclerViewAdapters;
 
+import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
 
         boolean isData = City.getCityArrayList().get(position).getCurrentWeatherRequest().getMain() != null;
         if (isData) {
-            holder.getCityName().setText(String.valueOf(City.getCityArrayList().get(position).getCityName()));
+            holder.getCityName().setText(String.valueOf(City.getCityArrayList().get(position).getCurrentWeatherRequest().getName()));
             holder.getCurrentTemp().setText(String.format(Locale.getDefault(), "%.0f °C", City.getCityArrayList().get(position).getCurrentWeatherRequest().getMain().getTemp()));
             holder.getWeatherIcon().setImageDrawable(setWeatherIcon(City.getCityArrayList().get(position).getCurrentWeatherRequest().getWeather()[0].getId(),
                     City.getCityArrayList().get(position).getCurrentWeatherRequest().getSys().getSunrise() * 1000,
@@ -117,6 +118,14 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
                 public void onClick(View view) {
                     if (itemClickListener != null)
                         itemClickListener.onItemClick(view, getAdapterPosition());
+                }
+            });
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Dialog dialog = new Dialog(v.getContext());
+                    dialog.openOptionsMenu();
+                    return true;
                 }
             });
         }

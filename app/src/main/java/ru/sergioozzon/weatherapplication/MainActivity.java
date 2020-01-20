@@ -37,17 +37,18 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String DEFAULT_CITY = "Moscow";
     City city;
     public static SQLiteDatabase database;
     SharedPreferences preferences;
     public static final String APP_PREFERENCES = "mySettings";
     public static final String PREFERENCE_CURRENT_CITY = "cityName";
+    private static final String DEFAULT_CITY = "Moscow";
     public final static String SETTING_FRAGMENT = "setting";
     public final static String WEATHER_FRAGMENT = "weather";
     public final static String LOCATION_FRAGMENT = "location";
     public final static String ABOUT_AS_FRAGMENT = "about as";
     public final static String ADD_CITY_FRAGMENT = "add city";
+
     private Toolbar toolbar;
     private DrawerLayout drawer;
     FloatingActionButton fab;

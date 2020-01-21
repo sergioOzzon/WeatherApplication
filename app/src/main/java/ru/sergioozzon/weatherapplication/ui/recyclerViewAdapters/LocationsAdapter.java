@@ -1,6 +1,5 @@
 package ru.sergioozzon.weatherapplication.ui.recyclerViewAdapters;
 
-import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -15,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
 import java.util.Locale;
+
 import ru.sergioozzon.weatherapplication.R;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.ViewHolder> {
 
     private OnItemClickListener itemClickListener;
+    private OnItemClickListener longClickListener;
 
     public LocationsAdapter() {
     }
@@ -57,6 +58,10 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
+    }
+
+    public void setItemLongClickListener(OnItemClickListener longClickListener) {
+        this.longClickListener = longClickListener;
     }
 
     private Drawable setWeatherIcon(int actualId, long sunrise, long sunset, Resources res) {
@@ -123,10 +128,12 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
             cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Dialog dialog = new Dialog(v.getContext());
-                    dialog.openOptionsMenu();
+                    if (longClickListener != null)
+                        longClickListener.onItemClick(v, getAdapterPosition());
                     return true;
                 }
+
+
             });
         }
 

@@ -1,7 +1,5 @@
 package ru.sergioozzon.weatherapplication.modelWeather;
 
-import android.content.SharedPreferences;
-
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -9,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.sergioozzon.weatherapplication.ui.MainActivity;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.CurrentWeatherRequest;
 import ru.sergioozzon.weatherapplication.modelWeather.entities.ForecastWeatherRequest;
 
@@ -58,17 +55,6 @@ public class City implements Serializable {
 
     public static Map<String, City> getCities() {
         return cities;
-    }
-
-    public static City getCurrentCity() {
-        return currentCity;
-    }
-
-    public static void setCurrentCity(City currentCity, SharedPreferences preferences) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(MainActivity.PREFERENCE_CURRENT_CITY, currentCity.cityName);
-        editor.apply();
-        City.currentCity = currentCity;
     }
 
     @Override

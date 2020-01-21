@@ -1,8 +1,6 @@
 package ru.sergioozzon.weatherapplication.ui.fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,35 +18,29 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-import ru.sergioozzon.weatherapplication.ui.MainActivity;
 import ru.sergioozzon.weatherapplication.R;
-import ru.sergioozzon.weatherapplication.modelWeather.CitiesTable;
 import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.modelWeather.CityManager;
 import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
+import ru.sergioozzon.weatherapplication.ui.MainActivity;
 
 public class AddCityFragment extends Fragment {
 
-    private SharedPreferences preferences;
-    private SQLiteDatabase database;
-
     private TextInputEditText inputEditText;
     private Button okButton;
-    InputMethodManager inputMethodManager;
-    View.OnClickListener okBtmClickListener = new View.OnClickListener() {
+    private InputMethodManager inputMethodManager;
+    private View.OnClickListener okBtmClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (inputEditText.getText() != null) {
-                final SharedPreferences.Editor editor = preferences.edit();
                 final String cityName = String.valueOf(inputEditText.getText());
                 City city = new City(cityName);
                 JsonDataLoader loader = new JsonDataLoader();
-                loader.execute(database);
-                CitiesTable.addCity(cityName, database);
-                editor.putString(MainActivity.PREFERENCE_CURRENT_CITY, cityName);
-                editor.apply();
+                loader.execute();
+                CityManager.addCity(city);
                 Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, WeatherFragment.newInstance(city, database), MainActivity.WEATHER_FRAGMENT)
+                        .replace(R.id.fragment_container, WeatherFragment.newInstance(city), MainActivity.WEATHER_FRAGMENT)
                         .commit();
                 inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
@@ -57,11 +49,6 @@ public class AddCityFragment extends Fragment {
 
 
     public AddCityFragment() {
-    }
-
-    AddCityFragment(SharedPreferences preferences, SQLiteDatabase database) {
-        this.preferences = preferences;
-        this.database = database;
     }
 
     @Override

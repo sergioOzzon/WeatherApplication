@@ -64,5 +64,7 @@
     <string name="name_of_the_city">Название города</string>
     <string name="could_not_get_coordinates">Не удалось получить координаты</string>
     <string name="ok">OK</string>
+    <string name="delete_city">Delete a city?</string>
+    <string name="city_removed">The city has been removed</string>
 
 </resources>

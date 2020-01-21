@@ -75,4 +75,6 @@
     <string name="ok">OK</string>
     <string name="could_not_get_coordinates">Could not get coordinates</string>
     <string name="icon_in_week_weather_item">icon in week weather item</string>
+    <string name="delete_city">Delete a city?</string>
+    <string name="city_removed">The city has been removed</string>
 </resources>

@@ -3,20 +3,11 @@ package ru.sergioozzon.weatherapplication.ui;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import ru.sergioozzon.weatherapplication.R;
-import ru.sergioozzon.weatherapplication.ui.fragments.AboutAsFragment;
-import ru.sergioozzon.weatherapplication.ui.fragments.LocationsFragment;
-import ru.sergioozzon.weatherapplication.ui.fragments.SettingsFragment;
-import ru.sergioozzon.weatherapplication.ui.fragments.WeatherFragment;
-import ru.sergioozzon.weatherapplication.modelWeather.CitiesTable;
-import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.modelWeather.DatabaseHelper;
-import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,13 +19,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
+
+import ru.sergioozzon.weatherapplication.modelWeather.CityManager;
+import ru.sergioozzon.weatherapplication.R;
+import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.modelWeather.DatabaseHelper;
+import ru.sergioozzon.weatherapplication.modelWeather.JsonDataLoader;
+import ru.sergioozzon.weatherapplication.ui.fragments.AboutAsFragment;
+import ru.sergioozzon.weatherapplication.ui.fragments.LocationsFragment;
+import ru.sergioozzon.weatherapplication.ui.fragments.SettingsFragment;
+import ru.sergioozzon.weatherapplication.ui.fragments.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static SQLiteDatabase database;
     SharedPreferences preferences;
     public static final String APP_PREFERENCES = "mySettings";
-    public static final String PREFERENCE_CURRENT_CITY = "cityName";
-    private static final String DEFAULT_CITY = "Moscow";
     public final static String SETTING_FRAGMENT = "setting";
     public final static String WEATHER_FRAGMENT = "weather";
     public final static String LOCATION_FRAGMENT = "location";
@@ -57,14 +54,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public View.OnClickListener clickListenerOnFabForUpdate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            city = City.getCurrentCity();
+            city = CityManager.getCurrentCity();
             if (city == null) {
-                city = City.getCities().get(DEFAULT_CITY);
+                city = CityManager.getDefaultCity();
             }
             JsonDataLoader loader = new JsonDataLoader();
-            loader.execute(database);
+            loader.execute();
             if (isResumed(WEATHER_FRAGMENT))
-                loadFragment(WeatherFragment.newInstance(city, database), WEATHER_FRAGMENT);
+                loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
             Toast.makeText(getApplicationContext(), (R.string.has_been_updated), Toast.LENGTH_SHORT).show();
         }
     };
@@ -75,13 +72,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         initPreferences();
         initDB();
+        initCityManager();
         initViews();
         initToolbar();
         initFloatingActionButton();
         initSideMenu();
         initCityList();
         loadWeatherData();
-        loadFragment(WeatherFragment.newInstance(city, database), WEATHER_FRAGMENT);
+        loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
     }
 
     private void initPreferences() {
@@ -90,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initDB() {
         database = new DatabaseHelper(getApplicationContext()).getWritableDatabase();
+    }
+
+    private void initCityManager() {
+        new CityManager(database, preferences);
     }
 
     private void initViews() {
@@ -117,28 +119,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initCityList() {
-        int CITIES_SIZE = City.getCities().size();
-        if (CITIES_SIZE == 0) {
-            CitiesTable.loadAllCities(database);
+        if (City.getCities().size()== 0) {
+            CityManager.loadAllCities();
             Log.d("MAIN_CITY_LIST_SIZE", " " + City.getCities().size());
         }
-        if (preferences.contains(PREFERENCE_CURRENT_CITY)) {
-            Log.d("PREFERENCES", "preferences.contains(APP_PREFERENCES) = true");
-            city = City.getCities().get(preferences.getString(PREFERENCE_CURRENT_CITY, DEFAULT_CITY));
-        } else city = City.getCurrentCity();
+        city = CityManager.getSavedCity();
         if (city == null) {
             //TODO: GET GEO
             //TODO: if GEO not avalible, then:
             Toast.makeText(getApplicationContext(), R.string.could_not_get_coordinates, Toast.LENGTH_SHORT).show();
-            city = new City(DEFAULT_CITY);
-            CitiesTable.addCity(city.getCityName(), database);
-            City.setCurrentCity(city, preferences);
+            city = CityManager.getDefaultCity();
+            CityManager.addCity(city);
         }
     }
 
     private void loadWeatherData() {
         JsonDataLoader loader = new JsonDataLoader();
-        loader.execute(database);
+        loader.execute();
     }
 
     private void loadFragment(Fragment fragment, String TAG) {
@@ -151,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        city = City.getCurrentCity();
+        city = CityManager.getCurrentCity();
     }
 
     @Override
@@ -183,13 +180,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 loadFragment(new SettingsFragment(), SETTING_FRAGMENT);
         } else if (id == R.id.nav_location) {
             if (!isResumed(LOCATION_FRAGMENT))
-                loadFragment(new LocationsFragment(preferences, database), LOCATION_FRAGMENT);
+                loadFragment(new LocationsFragment(), LOCATION_FRAGMENT);
         } else if (id == R.id.nav_about_us) {
             if (!isResumed(ABOUT_AS_FRAGMENT))
                 loadFragment(new AboutAsFragment(), ABOUT_AS_FRAGMENT);
         } else if (id == R.id.nav_home) {
             if (!isResumed(WEATHER_FRAGMENT))
-                loadFragment(WeatherFragment.newInstance(city, database), WEATHER_FRAGMENT);
+                loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
         } else if (id == R.id.nav_share) {
             //TODO
             Snackbar.make(drawer, "Coming soon", Snackbar.LENGTH_SHORT).show();

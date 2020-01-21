@@ -3,6 +3,12 @@ package ru.sergioozzon.weatherapplication.ui.fragments;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,29 +16,20 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import java.util.Objects;
-import ru.sergioozzon.weatherapplication.modelWeather.City;
-import ru.sergioozzon.weatherapplication.ui.recyclerViewAdapters.LocationsAdapter;
-import ru.sergioozzon.weatherapplication.ui.MainActivity;
+
 import ru.sergioozzon.weatherapplication.R;
+import ru.sergioozzon.weatherapplication.modelWeather.City;
+import ru.sergioozzon.weatherapplication.modelWeather.CityManager;
+import ru.sergioozzon.weatherapplication.ui.MainActivity;
+import ru.sergioozzon.weatherapplication.ui.recyclerViewAdapters.LocationsAdapter;
 
 public class LocationsFragment extends Fragment {
 
     private City currentCity;
-    private SharedPreferences preferences;
-    private SQLiteDatabase database;
 
     public LocationsFragment(){}
-
-    public LocationsFragment(SharedPreferences preferences, SQLiteDatabase database){
-        this.preferences = preferences;
-        this.database = database;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +45,7 @@ public class LocationsFragment extends Fragment {
         newCityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new AddCityFragment(preferences, database), MainActivity.ADD_CITY_FRAGMENT);
+                loadFragment(new AddCityFragment(), MainActivity.ADD_CITY_FRAGMENT);
             }
         });
         recyclerViewCreation(view);
@@ -75,8 +72,14 @@ public class LocationsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 currentCity = City.getCityArrayList().get(position);
-                City.setCurrentCity(currentCity, preferences);
-                loadFragment(WeatherFragment.newInstance(currentCity, database), MainActivity.WEATHER_FRAGMENT);
+                CityManager.setCurrentCity(currentCity);
+                loadFragment(WeatherFragment.newInstance(currentCity), MainActivity.WEATHER_FRAGMENT);
+            }
+        });
+        adapter.setItemLongClickListener(new LocationsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(view.getContext(), "Long click", Toast.LENGTH_SHORT).show();
             }
         });
     }

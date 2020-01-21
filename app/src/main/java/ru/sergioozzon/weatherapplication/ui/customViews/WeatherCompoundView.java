@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+
 import ru.sergioozzon.weatherapplication.R;
 
 public class WeatherCompoundView extends LinearLayout {

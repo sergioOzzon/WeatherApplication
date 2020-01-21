@@ -3,6 +3,7 @@ package ru.sergioozzon.weatherapplication.modelWeather.entities;
 import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;

@@ -38,7 +38,7 @@ import ru.sergioozzon.weatherapplication.ui.fragments.WeatherFragment;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     City city;
-    public static SQLiteDatabase database;
+    public SQLiteDatabase database;
     SharedPreferences preferences;
     public static final String APP_PREFERENCES = "mySettings";
     public final static String SETTING_FRAGMENT = "setting";

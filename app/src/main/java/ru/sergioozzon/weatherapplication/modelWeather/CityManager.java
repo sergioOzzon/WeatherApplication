@@ -4,11 +4,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import ru.sergioozzon.weatherapplication.ui.MainActivity;
-
 public class CityManager {
 
-    private static final String DEFAULT_CITY = "Moscow";
+    private static final String DEFAULT_CITY = "MOSCOW";
     private static final String PREFERENCE_CURRENT_CITY = "cityName";
     private static City currentCity = new City(DEFAULT_CITY);
     private static SharedPreferences preferences;

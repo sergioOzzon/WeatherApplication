@@ -40,12 +40,12 @@ public class CitiesTable {
     }
 
     public static void deleteCity(SQLiteDatabase database, City city) {
-        database.delete(TABLE_NAME, COLUMN_CITY, null);
+        database.delete(TABLE_NAME, COLUMN_CITY, new String[]{city.getCityName()});
     }
 
     public static void deleteAll(SQLiteDatabase database) {
         database.delete(TABLE_NAME, null, null);
-        //DELETE * FROM Notes
+        //DELETE * FROM Cities
     }
 
     public static void loadAllCities(SQLiteDatabase database) {

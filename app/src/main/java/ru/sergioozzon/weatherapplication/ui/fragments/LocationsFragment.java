@@ -1,5 +1,7 @@
 package ru.sergioozzon.weatherapplication.ui.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -29,7 +31,8 @@ public class LocationsFragment extends Fragment {
 
     private City currentCity;
 
-    public LocationsFragment(){}
+    public LocationsFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +70,7 @@ public class LocationsFragment extends Fragment {
         locationsRecycler.addItemDecoration(itemDecoration);
     }
 
-    private void setItemClickListener(LocationsAdapter adapter) {
+    private void setItemClickListener(final LocationsAdapter adapter) {
         adapter.setItemClickListener(new LocationsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -79,18 +82,45 @@ public class LocationsFragment extends Fragment {
         adapter.setItemLongClickListener(new LocationsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(view.getContext(), "Long click", Toast.LENGTH_SHORT).show();
+                openAlertDialogOnLongClicked(view, position, adapter);
+                Toast.makeText(view.getContext(), R.string.city_removed, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void loadFragment(Fragment fragment, String TAG){
+    private void openAlertDialogOnLongClicked(final View view, final int position, final LocationsAdapter adapter) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setMessage("Remove a city?");
+        builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CityManager.deleteCity(City.getCityArrayList().get(position));
+                adapter.notifyDataSetChanged();
+                Toast.makeText(view.getContext(), R.string.city_removed, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void loadFragment(Fragment fragment, String TAG) {
         FragmentTransaction fragmentTransaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment, TAG);
         fragmentTransaction.addToBackStack("");
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
     }
-
-
 }

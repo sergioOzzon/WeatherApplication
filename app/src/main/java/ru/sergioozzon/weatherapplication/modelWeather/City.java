@@ -17,10 +17,9 @@ public class City implements Serializable {
     private ForecastWeatherRequest forecastWeatherRequest;
     private static ArrayList<City> cityArrayList = new ArrayList<>();
     private static Map<String, City> cities = new HashMap<>();
-    private static City currentCity;
 
     public City(String cityName) {
-        this.cityName = cityName;
+        this.cityName = cityName.toUpperCase();
         currentWeatherRequest = new CurrentWeatherRequest();
         forecastWeatherRequest = new ForecastWeatherRequest();
         currentWeatherRequest.setName(cityName);

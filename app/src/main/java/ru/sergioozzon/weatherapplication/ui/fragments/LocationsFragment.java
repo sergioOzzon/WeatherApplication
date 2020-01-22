@@ -2,8 +2,6 @@ package ru.sergioozzon.weatherapplication.ui.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +49,10 @@ public class LocationsFragment extends Fragment {
                 loadFragment(new AddCityFragment(), MainActivity.ADD_CITY_FRAGMENT);
             }
         });
-        recyclerViewCreation(view);
+        createRecyclerView(view);
     }
 
-    private void recyclerViewCreation(@NonNull View view) {
+    private void createRecyclerView(@NonNull View view) {
         LocationsAdapter adapter = new LocationsAdapter();
         RecyclerView locationsRecycler = view.findViewById(R.id.locationsRecyclerView);
         locationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -83,7 +81,6 @@ public class LocationsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 openAlertDialogOnLongClicked(view, position, adapter);
-                Toast.makeText(view.getContext(), R.string.city_removed, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -98,7 +95,6 @@ public class LocationsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 Toast.makeText(view.getContext(), R.string.city_removed, Toast.LENGTH_SHORT).show();
             }
-
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override

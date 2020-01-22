@@ -35,9 +35,9 @@ public class AddCityFragment extends Fragment {
             if (inputEditText.getText() != null) {
                 final String cityName = String.valueOf(inputEditText.getText());
                 City city = new City(cityName);
+                CityManager.addCity(city);
                 JsonDataLoader loader = new JsonDataLoader();
                 loader.execute();
-                CityManager.addCity(city);
                 Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, WeatherFragment.newInstance(city), MainActivity.WEATHER_FRAGMENT)

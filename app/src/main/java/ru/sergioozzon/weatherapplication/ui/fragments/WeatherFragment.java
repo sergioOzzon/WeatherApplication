@@ -60,10 +60,10 @@ public class WeatherFragment extends Fragment {
     private TextView windTextView;
     private TextView pressureTextView;
     private ImageView weatherIcon;
+    private RecyclerView hourWeatherRecycler;
     private SensorManager sensorManager;
     private Sensor sensorTemp;
     private Sensor sensorHumid;
-    private RecyclerView hourWeatherRecycler;
 
     public WeatherFragment(){}
 

@@ -28,7 +28,7 @@ public class CityManager {
     }
 
     public static void addCity(City city) {
-        CitiesTable.addCity(city.getCityName(), database);
+        CitiesTable.addCity(city, database);
         setCurrentCity(city);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(PREFERENCE_CURRENT_CITY, city.getCityName());

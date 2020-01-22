@@ -72,11 +72,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         initPreferences();
         initDB();
-        initCityManager();
         initViews();
         initToolbar();
         initFloatingActionButton();
         initSideMenu();
+        createCityManager();
         initCityList();
         loadWeatherData();
         loadFragment(WeatherFragment.newInstance(city), WEATHER_FRAGMENT);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         database = new DatabaseHelper(getApplicationContext()).getWritableDatabase();
     }
 
-    private void initCityManager() {
+    private void createCityManager() {
         new CityManager(database, preferences);
     }
 
